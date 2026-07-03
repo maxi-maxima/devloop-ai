@@ -168,9 +168,9 @@ Clean up the dogfood branch when the validation is done:
 ./scripts/self-dogfood/reset.sh --delete-remote
 ```
 
-After the first real self-fix PR exists, update the README placeholder:
+First real DevLoop-generated self-fix PR:
 
 ```text
 Real self-fix PR:
-https://github.com/<owner>/devloop-ai/pull/<number>
+https://github.com/maxi-maxima/devloop-ai/pull/7
 ```

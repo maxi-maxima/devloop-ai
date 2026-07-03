@@ -59,9 +59,9 @@ DevLoop includes a controlled self-dogfood workflow that creates a tiny failing 
 ```
 
 Real self-fix PR:
-https://github.com/<owner>/devloop-ai/pull/<number>
+https://github.com/maxi-maxima/devloop-ai/pull/7
 
-Replace the placeholder after the first DevLoop-generated self-fix PR exists. See [docs/self-dogfooding.md](./docs/self-dogfooding.md).
+See [docs/self-dogfooding.md](./docs/self-dogfooding.md) for the reproducible local and GitHub Action paths.
 
 ## GitHub App Installation
 

@@ -51,7 +51,10 @@ describe('self-dogfood artifacts', () => {
 
     expect(readme).toContain('## DevLoop fixed itself');
     expect(readme).toContain('Real self-fix PR:');
-    expect(readme).toContain('https://github.com/<owner>/devloop-ai/pull/<number>');
+    expect(readme).toContain('https://github.com/maxi-maxima/devloop-ai/pull/7');
+    expect(readme).not.toContain('https://github.com/<owner>/devloop-ai/pull/<number>');
+    expect(docs).toContain('https://github.com/maxi-maxima/devloop-ai/pull/7');
+    expect(docs).not.toContain('https://github.com/<owner>/devloop-ai/pull/<number>');
     expect(docs).toContain('Path A: DevLoop GitHub App');
     expect(docs).toContain('Path B: DevLoop GitHub Action');
     expect(docs).toContain('evidence bundle');
