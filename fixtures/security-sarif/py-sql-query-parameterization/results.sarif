@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "rules": [
+            {
+              "id": "py/sql-query-parameterization",
+              "help": { "text": "Use parameterized SQL queries for user-controlled values." },
+              "properties": { "tags": ["security", "external/cwe/cwe-089"] }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "py/sql-query-parameterization",
+          "level": "error",
+          "message": { "text": "User-controlled value is interpolated into a SQL query." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "app.py" },
+                "region": { "startLine": 2 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

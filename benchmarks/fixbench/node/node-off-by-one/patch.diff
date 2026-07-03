@@ -1,0 +1,9 @@
+--- a/src/paging.js
++++ b/src/paging.js
+@@ -1,5 +1,5 @@
+ function page(items, size) {
+-  return items.slice(0, size - 1);
++  return items.slice(0, size);
+ }
+ 
+ module.exports = { page };

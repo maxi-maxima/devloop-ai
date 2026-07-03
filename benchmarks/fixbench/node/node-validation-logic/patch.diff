@@ -1,0 +1,9 @@
+--- a/src/validate.js
++++ b/src/validate.js
+@@ -1,5 +1,5 @@
+ function isEmail(value) {
+-  return /^[^@]+@[^@]+$/.test(value);
++  return /^[^@]+@[^@]+\.[^@]+$/.test(value);
+ }
+ 
+ module.exports = { isEmail };

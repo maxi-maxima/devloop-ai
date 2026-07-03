@@ -1,0 +1,60 @@
+name: FixBench
+
+on:
+  pull_request:
+    paths:
+      - "src/**"
+      - "benchmarks/**"
+      - "package.json"
+      - "tsconfig.json"
+  workflow_dispatch:
+
+permissions:
+  contents: read
+
+jobs:
+  fixbench:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build DevLoop
+        run: npm run build
+
+      - name: Run FixBench PR subset
+        if: ${{ github.event_name == 'pull_request' }}
+        run: |
+          node dist/cli/index.js bench run \
+            --case node-assertion-total \
+            --case node-null-undefined \
+            --case python-import-error \
+            --provider fixture \
+            --max-retries 1 \
+            --concurrency 1 \
+            --output benchmark-results
+
+      - name: Run full FixBench
+        if: ${{ github.event_name == 'workflow_dispatch' }}
+        run: |
+          node dist/cli/index.js bench run \
+            --provider fixture \
+            --max-retries 3 \
+            --concurrency 2 \
+            --output benchmark-results
+
+      - name: Upload FixBench reports
+        uses: actions/upload-artifact@v4
+        with:
+          name: fixbench-report
+          path: benchmark-results/

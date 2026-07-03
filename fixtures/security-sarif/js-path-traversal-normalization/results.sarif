@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "Semgrep",
+          "rules": [
+            {
+              "id": "js/path-traversal-normalization",
+              "help": { "text": "Normalize paths and ensure resolved paths stay under the intended root." },
+              "properties": { "tags": ["security", "external/cwe/cwe-022"] }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "js/path-traversal-normalization",
+          "level": "error",
+          "message": { "text": "User-controlled path is joined without containment validation." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/files.js" },
+                "region": { "startLine": 6 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

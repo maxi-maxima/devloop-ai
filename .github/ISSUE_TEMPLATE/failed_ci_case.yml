@@ -1,0 +1,45 @@
+name: Failed CI case
+description: Share a failing CI scenario that DevLoop should learn to fix.
+title: "[Failed CI Case]: "
+labels:
+  - fixbench
+  - failing-ci
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Please provide a minimal public reproduction. Do not paste secrets, private logs, or private repository data.
+  - type: input
+    id: repo
+    attributes:
+      label: Public reproduction repository
+      placeholder: https://github.com/owner/repo
+  - type: textarea
+    id: command
+    attributes:
+      label: Failing command
+      render: shell
+      placeholder: npm test
+    validations:
+      required: true
+  - type: textarea
+    id: log
+    attributes:
+      label: Sanitized failing log
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected minimal fix
+      description: If you know the fix, describe it briefly.
+  - type: dropdown
+    id: language
+    attributes:
+      label: Language
+      options:
+        - Node.js
+        - TypeScript
+        - Python
+        - Other

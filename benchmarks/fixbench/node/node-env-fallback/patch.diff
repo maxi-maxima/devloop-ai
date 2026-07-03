@@ -1,0 +1,9 @@
+--- a/src/env.js
++++ b/src/env.js
+@@ -1,5 +1,5 @@
+ function readPort(env) {
+-  return Number(env.PORT ?? 3000);
++  return env.PORT && env.PORT.trim() ? Number(env.PORT) : 3000;
+ }
+ 
+ module.exports = { readPort };

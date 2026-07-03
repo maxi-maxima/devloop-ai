@@ -1,0 +1,19 @@
+agents:
+  codex:
+    enabled: true
+    command: "codex"
+    defaultArgs:
+      - "exec"
+    sandbox: "workspace-write"
+  claude-code:
+    enabled: false
+  cursor-agent:
+    enabled: false
+  custom:
+    enabled: false
+
+defaults:
+  dryRun: true
+  allowWrite: false
+  allowNetwork: false
+  requirePatchReview: true

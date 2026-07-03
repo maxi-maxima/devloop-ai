@@ -1,0 +1,7 @@
+{
+  "allowedWorkspaces": ["."],
+  "allowWrite": false,
+  "allowNetwork": false,
+  "allowLocalRunner": false,
+  "maxRetries": 1
+}

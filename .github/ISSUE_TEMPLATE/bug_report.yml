@@ -1,0 +1,56 @@
+name: Bug report
+description: Report a problem with DevLoop AI.
+title: "[Bug]: "
+labels:
+  - bug
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Thanks for helping improve DevLoop. Please remove secrets, tokens, private URLs, and customer data before pasting logs.
+  - type: textarea
+    id: summary
+    attributes:
+      label: Summary
+      description: What went wrong?
+      placeholder: DevLoop failed to...
+    validations:
+      required: true
+  - type: textarea
+    id: steps
+    attributes:
+      label: Steps to reproduce
+      description: Include commands and minimal repo details when possible.
+      placeholder: |
+        1. Run ...
+        2. See ...
+    validations:
+      required: true
+  - type: textarea
+    id: expected
+    attributes:
+      label: Expected behavior
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Sanitized logs
+      render: shell
+  - type: input
+    id: version
+    attributes:
+      label: DevLoop version
+      placeholder: 0.1.0
+  - type: dropdown
+    id: mode
+    attributes:
+      label: Mode
+      options:
+        - CLI
+        - GitHub App
+        - GitHub Action
+        - Codex Skill
+        - Security Autofix
+        - Tool/MCP adapter
+        - Other

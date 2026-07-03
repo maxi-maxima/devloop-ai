@@ -1,0 +1,12 @@
+{
+  "name": "FirewallBench",
+  "version": "0.1.0",
+  "description": "Reproducible benchmark for DevLoop Agent Firewall decisions.",
+  "caseFiles": [
+    "prompt-injection/cases.json",
+    "secret-exfiltration/cases.json",
+    "dangerous-commands/cases.json",
+    "unsafe-patches/cases.json",
+    "malicious-repo-instructions/cases.json"
+  ]
+}

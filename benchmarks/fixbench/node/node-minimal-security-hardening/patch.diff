@@ -1,0 +1,9 @@
+--- a/src/redirect.js
++++ b/src/redirect.js
+@@ -1,5 +1,5 @@
+ function isSafeRedirect(target) {
+-  return target.startsWith('/');
++  return target.startsWith('/') && !target.startsWith('//');
+ }
+ 
+ module.exports = { isSafeRedirect };

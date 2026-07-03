@@ -1,0 +1,9 @@
+--- a/src/date.js
++++ b/src/date.js
+@@ -1,5 +1,5 @@
+ function formatDate(date) {
+-  return date.toString().slice(0, 10);
++  return date.toISOString().slice(0, 10);
+ }
+ 
+ module.exports = { formatDate };

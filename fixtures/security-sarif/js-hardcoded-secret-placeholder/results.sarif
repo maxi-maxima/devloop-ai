@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "ESLint",
+          "rules": [
+            {
+              "id": "js/hardcoded-secret-placeholder",
+              "help": { "text": "Do not keep secrets or secret-like placeholders in source code." },
+              "properties": { "tags": ["security", "external/cwe/cwe-798"] }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "js/hardcoded-secret-placeholder",
+          "level": "warning",
+          "message": { "text": "Secret-like placeholder is hardcoded in source." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/config.js" },
+                "region": { "startLine": 1 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

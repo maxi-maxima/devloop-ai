@@ -1,0 +1,95 @@
+{
+  "name": "devloop-ai",
+  "version": "0.1.0-alpha.0",
+  "description": "Firewall and autofix agent for AI coding agents, failed CI, and security alerts.",
+  "type": "module",
+  "main": "dist/cli/index.js",
+  "types": "dist/tools/index.d.ts",
+  "exports": {
+    ".": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    },
+    "./tools": {
+      "types": "./dist/tools/index.d.ts",
+      "import": "./dist/tools/index.js"
+    },
+    "./org": {
+      "types": "./dist/org/index.d.ts",
+      "import": "./dist/org/index.js"
+    },
+    "./cli": {
+      "import": "./dist/cli/index.js"
+    },
+    "./package.json": "./package.json"
+  },
+  "bin": {
+    "devloop": "dist/cli/index.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/OWNER/devloop-ai.git"
+  },
+  "homepage": "https://github.com/OWNER/devloop-ai#readme",
+  "bugs": {
+    "url": "https://github.com/OWNER/devloop-ai/issues"
+  },
+  "files": [
+    "dist",
+    "benchmarks",
+    "docs",
+    "templates",
+    "fixtures",
+    "examples",
+    "assets",
+    "scripts",
+    ".agents",
+    "README.md",
+    "CHANGELOG.md",
+    "CONTRIBUTING.md",
+    "CODE_OF_CONDUCT.md",
+    "SECURITY.md",
+    "ROADMAP.md",
+    ".env.example",
+    ".devloop.yml.example",
+    ".devloop-policy.yml.example",
+    ".devloop-mcp.json.example",
+    ".devloop-agents.yml.example",
+    "LICENSE"
+  ],
+  "scripts": {
+    "build": "tsc -p tsconfig.json && node scripts/copy-assets.mjs",
+    "dev": "tsx src/cli/index.ts",
+    "lint": "node scripts/lint.mjs",
+    "security:secrets": "node scripts/security-secrets.mjs",
+    "test": "vitest run",
+    "typecheck": "tsc -p tsconfig.json --noEmit"
+  },
+  "keywords": [
+    "ai",
+    "agents",
+    "github-app",
+    "ci",
+    "autofix",
+    "security",
+    "mcp",
+    "codex",
+    "typescript",
+    "developer-tools",
+    "devsecops",
+    "prompt-injection"
+  ],
+  "author": "",
+  "license": "MIT",
+  "dependencies": {
+    "commander": "^15.0.0",
+    "dotenv": "^17.4.2",
+    "simple-git": "^3.36.0"
+  },
+  "devDependencies": {
+    "@types/node": "^26.1.0",
+    "tsx": "^4.22.5",
+    "typescript": "^6.0.3",
+    "vitest": "^4.1.9"
+  }
+}

@@ -1,0 +1,17 @@
+--- a/src/discount.js
++++ b/src/discount.js
+@@ -1,5 +1,5 @@
+ function applyDiscount(total, percent) {
+-  return total - percent;
++  return total - total * (percent / 100);
+ }
+ 
+ module.exports = { applyDiscount };
+--- a/test.js
++++ b/test.js
+@@ -2,4 +2,5 @@
+ const { applyDiscount } = require('./src/discount');
+ 
+ assert.equal(applyDiscount(100, 10), 90);
+ assert.equal(applyDiscount(50, 20), 40);
++assert.equal(applyDiscount(200, 25), 150);

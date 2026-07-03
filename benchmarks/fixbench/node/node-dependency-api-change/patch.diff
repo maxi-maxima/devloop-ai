@@ -1,0 +1,9 @@
+--- a/src/adapter.js
++++ b/src/adapter.js
+@@ -1,5 +1,5 @@
+ function readItems(response) {
+-  return response.data.items;
++  return (response.data ?? response.json).items;
+ }
+ 
+ module.exports = { readItems };

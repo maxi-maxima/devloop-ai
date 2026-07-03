@@ -1,0 +1,46 @@
+name: Security Autofix case
+description: Share a safe SARIF remediation case for DevLoop.
+title: "[Security Autofix Case]: "
+labels:
+  - security-autofix
+  - sarif
+body:
+  - type: markdown
+    attributes:
+      value: |
+        Use safe educational examples only. Do not include real credentials, exploit payloads, private targets, or offensive tooling.
+  - type: input
+    id: scanner
+    attributes:
+      label: Scanner
+      placeholder: CodeQL, Semgrep, ESLint, Bandit
+    validations:
+      required: true
+  - type: input
+    id: rule
+    attributes:
+      label: Rule id
+      placeholder: js/xss-escaping
+    validations:
+      required: true
+  - type: textarea
+    id: sarif
+    attributes:
+      label: Minimal sanitized SARIF excerpt
+      render: json
+    validations:
+      required: true
+  - type: textarea
+    id: vulnerable
+    attributes:
+      label: Minimal vulnerable code
+      render: shell
+    validations:
+      required: true
+  - type: textarea
+    id: safe_fix
+    attributes:
+      label: Expected safe fix
+      description: Describe the root-cause remediation, not scanner suppression.
+    validations:
+      required: true

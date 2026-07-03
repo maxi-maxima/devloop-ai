@@ -1,0 +1,35 @@
+{
+  "$schema": "https://docs.oasis-open.org/sarif/sarif/v2.1.0/cs01/schemas/sarif-schema-2.1.0.json",
+  "version": "2.1.0",
+  "runs": [
+    {
+      "tool": {
+        "driver": {
+          "name": "CodeQL",
+          "rules": [
+            {
+              "id": "ts/unsafe-json-validation",
+              "help": { "text": "Validate untrusted JSON before using it as a typed object." },
+              "properties": { "tags": ["security", "external/cwe/cwe-020"] }
+            }
+          ]
+        }
+      },
+      "results": [
+        {
+          "ruleId": "ts/unsafe-json-validation",
+          "level": "warning",
+          "message": { "text": "Parsed JSON is cast to a trusted type without validation." },
+          "locations": [
+            {
+              "physicalLocation": {
+                "artifactLocation": { "uri": "src/index.ts" },
+                "region": { "startLine": 6 }
+              }
+            }
+          ]
+        }
+      ]
+    }
+  ]
+}

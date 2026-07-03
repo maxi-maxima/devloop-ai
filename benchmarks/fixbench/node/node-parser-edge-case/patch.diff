@@ -1,0 +1,22 @@
+--- a/src/csv.js
++++ b/src/csv.js
+@@ -1,5 +1,18 @@
+ function parseLine(line) {
+-  return line.split(',');
++  const cells = [];
++  let current = '';
++  let quoted = false;
++  for (const char of line) {
++    if (char === '"') {
++      quoted = !quoted;
++    } else if (char === ',' && !quoted) {
++      cells.push(current);
++      current = '';
++    } else {
++      current += char;
++    }
++  }
++  return [...cells, current];
+ }
+ 
+ module.exports = { parseLine };

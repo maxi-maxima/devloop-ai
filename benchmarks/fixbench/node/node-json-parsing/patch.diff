@@ -1,0 +1,9 @@
+--- a/src/json.js
++++ b/src/json.js
+@@ -1,5 +1,5 @@
+ function parseConfig(text) {
+-  return JSON.parse(text);
++  return JSON.parse(text.replace(/^\uFEFF/, ''));
+ }
+ 
+ module.exports = { parseConfig };

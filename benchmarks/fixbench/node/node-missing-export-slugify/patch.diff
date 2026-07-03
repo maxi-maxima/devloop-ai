@@ -1,0 +1,8 @@
+--- a/src/text.js
++++ b/src/text.js
+@@ -6,4 +6,4 @@
+   return value.toLowerCase().replace(/\s+/g, '-');
+ }
+ 
+-module.exports = { capitalize };
++module.exports = { capitalize, slugify };

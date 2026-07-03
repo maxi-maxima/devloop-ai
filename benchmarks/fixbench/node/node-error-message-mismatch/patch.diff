@@ -1,0 +1,11 @@
+--- a/src/errors.js
++++ b/src/errors.js
+@@ -1,7 +1,7 @@
+ function requireName(value) {
+   if (!value) {
+-    throw new Error('bad input');
++    throw new Error('Name is required');
+   }
+   return value;
+ }
+ 

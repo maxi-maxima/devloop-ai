@@ -1,0 +1,11 @@
+export { checkCommandRisk } from './command-risk-detector.js';
+export { writeFirewallEvidence } from './evidence-writer.js';
+export { formatFirewallReport } from './firewall-report.js';
+export { checkPatchRisk } from './patch-risk-detector.js';
+export { loadFirewallPolicy, parseFirewallPolicy, policyForMode } from './policy-engine.js';
+export { checkInput, checkPromptInjection } from './prompt-injection-detector.js';
+export { redactSecrets } from './redactor.js';
+export { scanRepositoryInstructions } from './repository-instruction-scanner.js';
+export { checkSecretExposure } from './secret-exposure-detector.js';
+export { buildSafeAgentContext, taintInput, trustLevelForSource } from './taint-tracker.js';
+export type * from './types.js';

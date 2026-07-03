@@ -1,0 +1,19 @@
+enabled: true
+autofix:
+  enabled: true
+  mode: dry-run
+  maxRetries: 3
+  testCommand: "npm test"
+  installCommand: "npm ci"
+  allowLockfileEdits: false
+  allowNetwork: false
+  maxFilesChanged: 5
+
+security:
+  enabled: true
+  sarifPaths:
+    - results.sarif
+
+comments:
+  trustedUsers:
+    - repo-owner

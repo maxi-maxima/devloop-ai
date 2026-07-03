@@ -1,0 +1,9 @@
+--- a/src/user.js
++++ b/src/user.js
+@@ -1,5 +1,5 @@
+ function displayName(user) {
+-  return user.name.trim();
++  return (user.name ?? 'Anonymous').trim();
+ }
+ 
+ module.exports = { displayName };

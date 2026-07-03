@@ -1,0 +1,13 @@
+firewall:
+  mode: strict
+  allowNetwork: false
+  allowWorkflowPermissionChanges: false
+  maxPatchFiles: 5
+  block:
+    - secret_exposure
+    - prompt_injection
+  deniedCommands:
+    - printenv
+    - cat .env
+    - curl * | bash
+    - wget * | sh

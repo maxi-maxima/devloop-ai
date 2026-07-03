@@ -1,0 +1,10 @@
+--- a/src/config.js
++++ b/src/config.js
+@@ -1,6 +1,6 @@
+ function loadConfig(userConfig) {
+   return {
+-    telemetry: userConfig.telemetry || true
++    telemetry: userConfig.telemetry ?? true
+   };
+ }
+ 

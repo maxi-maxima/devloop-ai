@@ -1,0 +1,11 @@
+--- a/src/paths.js
++++ b/src/paths.js
+@@ -1,5 +1,7 @@
++const path = require('node:path');
++
+ function buildPath(base, name) {
+-  return `${base}/${name}`;
++  return path.join(base, name);
+ }
+ 
+ module.exports = { buildPath };

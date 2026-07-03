@@ -1,0 +1,71 @@
+# Dependencies and build output
+node_modules/
+dist/
+coverage/
+.nyc_output/
+*.tsbuildinfo
+
+# Local environment and secrets
+.env
+.env.local
+.env.production
+.env.*.local
+!.env.example
+*.pem
+*.key
+*.p8
+*.p12
+*.crt
+*.csr
+*.keystore
+*.jks
+*.asc
+*.gpg
+*.age
+*.kdbx
+*.npmrc
+!.npmrc.example
+*private-key*
+*github-app-private-key*
+*openai-api-key*
+*anthropic-api-key*
+*github-token*
+*npm-token*
+
+# DevLoop local state, private evidence, logs, and benchmark output
+.devloop/
+*.log
+logs/
+ci-logs/
+real-ci-logs/
+/evidence/
+benchmark-results/
+firewallbench-results/
+devloop-org-report.md
+devloop-org-rollout-plan.json
+devloop-org-policy-sync-plan.json
+
+# Local databases and temp directories
+*.sqlite
+*.sqlite3
+*.db
+*.db-journal
+tmp/
+temp/
+.tmp/
+.cache/
+.sandbox/
+sandbox/
+worktrees/
+docker-tmp/
+.docker-cache/
+
+# Package artifacts
+*.tgz
+*.tar.gz
+
+# OS/editor noise
+.DS_Store
+Thumbs.db
+.idea/
+.vscode/
