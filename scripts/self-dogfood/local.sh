@@ -94,7 +94,7 @@ fi
 
 step "Previewing DevLoop autofix"
 # Equivalent CLI shape: devloop autofix --dry-run --demo --no-pr
-OPENAI_API_KEY= ANTHROPIC_API_KEY= GITHUB_TOKEN= node "$REPO_COPY/dist/cli/index.js" autofix \
+env -u OPENAI_API_KEY -u ANTHROPIC_API_KEY -u GITHUB_TOKEN node "$REPO_COPY/dist/cli/index.js" autofix \
   --repo "$FIXTURE_PATH" \
   --log-file "$LOG_FILE" \
   --test-command "npm test" \
@@ -104,7 +104,7 @@ OPENAI_API_KEY= ANTHROPIC_API_KEY= GITHUB_TOKEN= node "$REPO_COPY/dist/cli/index
   --demo
 
 step "Applying DevLoop autofix"
-OPENAI_API_KEY= ANTHROPIC_API_KEY= GITHUB_TOKEN= node "$REPO_COPY/dist/cli/index.js" autofix \
+env -u OPENAI_API_KEY -u ANTHROPIC_API_KEY -u GITHUB_TOKEN node "$REPO_COPY/dist/cli/index.js" autofix \
   --repo "$FIXTURE_PATH" \
   --log-file "$LOG_FILE" \
   --test-command "npm test" \
