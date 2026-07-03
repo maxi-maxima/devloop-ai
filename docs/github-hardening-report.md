@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `96fe3cf3aaf6617134872a3ccd1df57790406583`
+- Latest inspected commit before this report update: `12aca493614e869d4a4d83f01d3500fef7e072fa`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28673025940` | success |
-| Security | `28673025961` | success |
+| CI | `28673902481` | success |
+| Security | `28673902472` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -122,7 +122,7 @@ Manual follow-up:
 
 ## CodeQL / Code Scanning
 
-Status: workflow present and CodeQL ran successfully, but open alerts require triage.
+Status: workflow present and CodeQL ran successfully, but open alerts still block launch posts.
 
 The code scanning alerts API returned 8 open high-severity alerts:
 
@@ -144,6 +144,7 @@ Current workflow behavior:
 - The latest inspected `Security` run completed `CodeQL` successfully.
 - While the repository is private, the job only runs when repository variable `ENABLE_CODEQL_ON_PRIVATE=true` is set.
 - This avoids surprising GitHub Advanced Security requirements while the repository remains private.
+- PR `#8` (`fix: eliminate CodeQL ReDoS risks`) has passing checks and zero `js/polynomial-redos` alerts on its branch, but it has not been merged into `main`.
 
 Manual steps when supported:
 
@@ -177,7 +178,9 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Triage or resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts.
-- Run the Security workflow after CodeQL fixes or triage decisions are complete.
+- Merge PR `#8` to resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts on `main`.
+- Run the Security workflow after the CodeQL fix reaches `main`.
+- Confirm zero open high-severity CodeQL alerts.
+- Prepare and publish `v0.1.0-alpha.2` before launch posts.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.
