@@ -29,7 +29,7 @@ The fixture has a small realistic bug:
 ## Run It
 
 ```bash
-git clone <repo>
+git clone https://github.com/maxi-maxima/devloop-ai.git
 cd devloop-ai
 npm install
 npm run build

@@ -12,7 +12,7 @@ DevLoop is designed to run under your control.
 ## Install
 
 ```bash
-git clone <repo>
+git clone https://github.com/maxi-maxima/devloop-ai.git
 cd devloop-ai
 npm install
 npm run build

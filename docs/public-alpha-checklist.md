@@ -1,6 +1,6 @@
 # Public Alpha Checklist
 
-Use this checklist before switching the repository from private to public and publishing launch posts for `v0.1.0-alpha.0`.
+Use this checklist before switching the repository from private to public and publishing launch posts for `v0.1.0-alpha.1`.
 
 ## Repository
 
@@ -33,7 +33,8 @@ Use this checklist before switching the repository from private to public and pu
 - Branch protection, required checks, secret scanning, push protection, and Actions read-only confirmation must be performed immediately after switching visibility to public.
 - README and `docs/self-dogfooding.md` link the real DevLoop-generated self-fix PR: `https://github.com/maxi-maxima/devloop-ai/pull/7`.
 - `./scripts/demo-autofix.sh` passed in the latest local audit when run with Git Bash on Windows.
-- `v0.1.0-alpha.0` annotated tag and GitHub prerelease are present.
+- `v0.1.0-alpha.0` annotated tag and GitHub prerelease are present, but the tag points to an earlier launch-readiness commit.
+- `v0.1.0-alpha.1` is the intended public alpha release because it includes the final README, checklist, and hardening documentation corrections.
 - npm publish is intentionally deferred.
 - Launch copy exists, but should not be posted until the repository is public and the immediate post-public protection audit is green.
 

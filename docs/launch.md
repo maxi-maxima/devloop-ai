@@ -24,7 +24,7 @@ DevLoop AI turns failed CI and security alerts into tested pull requests while k
 ## Demo Flow
 
 ```bash
-git clone <repo>
+git clone https://github.com/maxi-maxima/devloop-ai.git
 cd devloop-ai
 npm install
 npm run build

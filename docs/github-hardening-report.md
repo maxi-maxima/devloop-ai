@@ -8,7 +8,7 @@ Generated for the private pre-public-launch repository hardening pass.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: private
 - Default branch: `main`
-- Latest inspected commit before this report update: `18eea159494c89405e25fa88d4a73cd73d4bb192`
+- Latest inspected commit before the `v0.1.0-alpha.1` release preparation: `72a9772f44a07195273084edcf4b580cc81772bc`
 
 ## Latest Remote CI Status
 
@@ -199,6 +199,7 @@ Tracked files present:
 - `docs/public-alpha-checklist.md`
 - `docs/launch-copy.md`
 - `docs/releases/v0.1.0-alpha.0.md`
+- `docs/releases/v0.1.0-alpha.1.md`
 
 ## Manual Steps Still Required
 

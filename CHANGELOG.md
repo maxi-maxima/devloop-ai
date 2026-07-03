@@ -2,6 +2,22 @@
 
 All notable changes to DevLoop AI will be documented in this file.
 
+## v0.1.0-alpha.1
+
+Launch-readiness correction release.
+
+### Highlights
+
+- Corrects the README quickstart clone URL for the public repository.
+- Updates the public alpha checklist to reflect the published prerelease and required post-public protection steps.
+- Updates the GitHub hardening report with final public visibility safeguards.
+- Keeps npm publishing intentionally deferred.
+
+### Notes
+
+- No runtime product code changes from `v0.1.0-alpha.0`.
+- Supersedes `v0.1.0-alpha.0` as the recommended public alpha release.
+
 ## v0.1.0-alpha.0
 
 First public alpha release candidate.

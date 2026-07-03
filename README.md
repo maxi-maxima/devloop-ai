@@ -15,7 +15,7 @@ DevLoop is built for developers, maintainers, and AI tooling users who want auto
 ## Quick Links
 
 - [30-second demo](#30-second-local-demo)
-- [Release notes](./docs/releases/v0.1.0-alpha.0.md)
+- [Release notes](./docs/releases/v0.1.0-alpha.1.md)
 - [Self dogfood](#devloop-fixed-itself)
 - [GitHub App](#github-app-installation)
 - [CLI](#cli-usage)
@@ -346,7 +346,7 @@ See [docs/security-model.md](./docs/security-model.md).
 
 ## Documentation
 
-- [v0.1.0-alpha.0 release notes](./docs/releases/v0.1.0-alpha.0.md)
+- [v0.1.0-alpha.1 release notes](./docs/releases/v0.1.0-alpha.1.md)
 - [Public alpha checklist](./docs/public-alpha-checklist.md)
 - [Launch copy](./docs/launch-copy.md)
 - [Launch guide](./docs/launch.md)
