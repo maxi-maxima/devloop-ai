@@ -2,25 +2,41 @@
 
 All notable changes to DevLoop AI will be documented in this file.
 
-## 0.1.0-alpha.0
+## v0.1.0-alpha.0
 
-Initial public alpha release candidate.
+First public alpha release candidate.
 
-### Added
+### Highlights
 
-- CI AutoFix CLI for diagnosis, patch generation, test reruns, and PR creation.
+- CI AutoFix
+- Security Autofix from SARIF
+- GitHub App mode
+- GitHub Action template
+- MCP server
+- Codex Skill
+- Agent Firewall
+- Evidence Bundles
+- FixBench
+- FirewallBench
+- Sandbox Runner
+
+### Included
+
+- CLI commands for diagnosis, autofix, security autofix, benchmarks, firewall checks, agent adapters, and org fleet mode.
 - GitHub App webhook mode for failed workflow routing and slash commands.
-- SARIF Security Autofix for safe, minimal security remediation previews.
-- MCP-ready tool contracts for diagnosis, autofix, patch review, firewall checks, security autofix, and benchmarks.
-- Agent Firewall for prompt injection, secret exposure, dangerous command, and unsafe patch checks.
-- Evidence bundles for auditable diagnosis, redacted logs, patch diffs, validation commands, and hashes.
-- Agent adapters for Codex, custom commands, and placeholder integrations.
-- FixBench and FirewallBench benchmark suites.
-- Organization fleet mode for scan, status, rollout planning, and policy sync.
+- GitHub Action template for CI autofix.
+- SARIF parsing and safe security patch generation.
+- MCP-compatible stdio server and transport-agnostic tool contracts.
+- Codex Skill package for reusable CI autofix workflows.
+- Agent Firewall checks for prompt injection, secret exposure, dangerous commands, unsafe patches, and malicious repo instructions.
+- Evidence bundles with diagnosis, redacted logs, patch diffs, validation commands, firewall reports, sandbox metadata, and hashes.
+- FixBench and FirewallBench reproducible benchmark suites.
+- Docker and local sandbox runner abstractions.
 
-### Security
+### Known limitations
 
-- Dry-run defaults for risky automation paths.
-- Forbidden-file and patch guardrails for secrets, workflows, tests, and lockfiles.
-- Redaction for logs, prompts, and evidence output.
-- Release readiness scripts and GitHub workflows for CI, security, and tagged releases.
+- Alpha quality.
+- Human review required.
+- No auto-merge.
+- Some fixes may fail.
+- Docker recommended for sandboxing.

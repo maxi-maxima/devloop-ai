@@ -1,0 +1,35 @@
+name: Self Dogfood Fixture
+
+on:
+  pull_request:
+    paths:
+      - "fixtures/self-dogfood/**"
+      - "scripts/self-dogfood/**"
+      - ".github/workflows/self-dogfood.yml"
+  push:
+    branches:
+      - main
+    paths:
+      - "fixtures/self-dogfood/**"
+      - "scripts/self-dogfood/**"
+      - ".github/workflows/self-dogfood.yml"
+
+permissions:
+  contents: read
+
+jobs:
+  fixture:
+    name: Run self-dogfood fixture
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Run fixture tests
+        run: npm --prefix fixtures/self-dogfood test

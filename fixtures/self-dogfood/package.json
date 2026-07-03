@@ -1,0 +1,9 @@
+{
+  "name": "devloop-self-dogfood-fixture",
+  "version": "0.0.0",
+  "private": true,
+  "description": "Tiny fixture DevLoop can intentionally break and then fix during self-dogfooding.",
+  "scripts": {
+    "test": "node test/user.test.js"
+  }
+}

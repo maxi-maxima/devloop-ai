@@ -15,6 +15,8 @@ DevLoop is built for developers, maintainers, and AI tooling users who want auto
 ## Quick Links
 
 - [30-second demo](#30-second-local-demo)
+- [Release notes](./docs/releases/v0.1.0-alpha.0.md)
+- [Self dogfood](#devloop-fixed-itself)
 - [GitHub App](#github-app-installation)
 - [CLI](#cli-usage)
 - [MCP](#mcp-usage)
@@ -46,6 +48,20 @@ npm run build
 ```
 
 The demo copies a tiny failing Node.js fixture, shows the failing test, runs `devloop autofix --dry-run`, applies the patch, reruns tests, and prints the final diff. No API key is required because the demo uses deterministic fixture mode. See [docs/demo.md](./docs/demo.md).
+
+## DevLoop fixed itself
+
+DevLoop includes a controlled self-dogfood workflow that creates a tiny failing fixture branch, lets CI fail, and gives DevLoop a safe bug to diagnose and patch through the same autofix path used on user repositories.
+
+```bash
+./scripts/self-dogfood/local.sh
+./scripts/self-dogfood/start.sh
+```
+
+Real self-fix PR:
+https://github.com/<owner>/devloop-ai/pull/<number>
+
+Replace the placeholder after the first DevLoop-generated self-fix PR exists. See [docs/self-dogfooding.md](./docs/self-dogfooding.md).
 
 ## GitHub App Installation
 
@@ -330,6 +346,9 @@ See [docs/security-model.md](./docs/security-model.md).
 
 ## Documentation
 
+- [v0.1.0-alpha.0 release notes](./docs/releases/v0.1.0-alpha.0.md)
+- [Public alpha checklist](./docs/public-alpha-checklist.md)
+- [Launch copy](./docs/launch-copy.md)
 - [Launch guide](./docs/launch.md)
 - [First GitHub push](./docs/first-github-push.md)
 - [Examples](./docs/examples.md)
@@ -350,6 +369,7 @@ See [docs/security-model.md](./docs/security-model.md).
 - [Benchmarks](./docs/benchmark.md)
 - [Security Autofix](./docs/security-autofix.md)
 - [MCP-ready tools](./docs/mcp.md)
+- [Self-dogfooding](./docs/self-dogfooding.md)
 - [Tool interface](./docs/tools.md)
 
 ## Architecture
