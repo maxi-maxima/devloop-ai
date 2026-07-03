@@ -83,6 +83,23 @@ describe('DevLoop Agent Firewall', () => {
     expect(result.findings.some((finding) => finding.message.includes('disables tests'))).toBe(true);
   });
 
+  test('parses adversarial diff headers without missing unsafe patch lines', () => {
+    const noisyPath = 'a b/'.repeat(1200);
+    const patch = [
+      `diff --git a/${noisyPath} b/${noisyPath}`,
+      '--- a/test/user.test.js',
+      '+++ b/test/user.test.js',
+      '@@ -1 +1 @@',
+      '-test("formats user", () => {',
+      '+test.skip("formats user", () => {'
+    ].join('\n');
+
+    const result = checkPatchRisk({ repoPath: '.', patch });
+
+    expect(result.decision).toBe('block');
+    expect(result.findings.some((finding) => finding.id === 'patch.disables-tests')).toBe(true);
+  });
+
   test('loads .devloop-policy.yml and applies denied commands', async () => {
     const repoPath = await tempRepo();
     await writeFile(

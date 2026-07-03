@@ -27,6 +27,10 @@ export function validatePatchSafety(patch: string, options: SafetyOptions = {}):
   let changedFiles: string[] = [];
   const forbiddenFiles: string[] = [];
 
+  if (containsBinaryPatch(patch)) {
+    errors.push('Binary file changes are not allowed.');
+  }
+
   try {
     changedFiles = [
       ...new Set(parseUnifiedDiff(patch).map((file) => normalizePatchPath(file.newPath || file.oldPath)))
@@ -34,7 +38,7 @@ export function validatePatchSafety(patch: string, options: SafetyOptions = {}):
   } catch (error) {
     return {
       passed: false,
-      errors: [error instanceof Error ? error.message : String(error)],
+      errors: [...errors, error instanceof Error ? error.message : String(error)],
       warnings,
       changedFiles,
       forbiddenFiles
@@ -44,10 +48,6 @@ export function validatePatchSafety(patch: string, options: SafetyOptions = {}):
   const maxFiles = options.maxFiles ?? DEFAULT_MAX_FILES;
   if (changedFiles.length > maxFiles) {
     errors.push(`Patch touches too many files (${changedFiles.length} > ${maxFiles}).`);
-  }
-
-  if (/GIT binary patch|Binary files .* differ/i.test(patch)) {
-    errors.push('Binary file changes are not allowed.');
   }
 
   for (const file of changedFiles) {
@@ -108,4 +108,17 @@ function isUnsafePath(file: string): boolean {
 
 function normalizePatchPath(file: string): string {
   return file.replace(/\\/g, '/').replace(/^a\//, '').replace(/^b\//, '');
+}
+
+function containsBinaryPatch(patch: string): boolean {
+  for (const line of patch.split(/\r?\n/)) {
+    const lower = line.toLowerCase();
+    if (lower.includes('git binary patch')) {
+      return true;
+    }
+    if (lower.startsWith('binary files ') && lower.endsWith(' differ')) {
+      return true;
+    }
+  }
+  return false;
 }
