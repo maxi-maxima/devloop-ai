@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `4296fe96a92fcf4a44850916e75996b2deea9fb1`
+- Latest inspected commit before this report update: `96fe3cf3aaf6617134872a3ccd1df57790406583`
 
 ## Latest Remote CI Status
 
@@ -16,23 +16,24 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28672868944` | success |
-| Security | `28672868952` | success |
+| CI | `28673025940` | success |
+| Security | `28673025961` | success |
 
 Discovered check/job names from the inspected commit:
 
 - `Build, lint, typecheck, and test`: success
 - `Secret scan`: success
 - `Dependency audit`: success
-- `CodeQL`: skipped while private unless repository variable `ENABLE_CODEQL_ON_PRIVATE=true` is set
+- `CodeQL`: success
 
 Recommended globally required checks for `main`:
 
 - `Build, lint, typecheck, and test`
 - `Secret scan`
 - `Dependency audit`
+- `CodeQL`
 
-Do not make `Self Dogfood Fixture` globally required because that workflow is path-limited and will not run on every pull request. Add `CodeQL` as a required check only after code scanning is enabled and a successful CodeQL run has been observed.
+Do not make `Self Dogfood Fixture` globally required because that workflow is path-limited and will not run on every pull request.
 
 ## Actions Permissions
 
@@ -57,61 +58,34 @@ Only workflows that need write access should declare it explicitly. Current rele
 
 ## Branch Protection / Rulesets
 
-Status: not enabled.
+Status: enabled through GitHub API.
 
-The branch protection API returned:
+Configured policy for `main`:
 
-```text
-Branch not protected
-```
-
-The repository rulesets API returned an empty list. No branch protection or ruleset is currently active for `main`.
-
-Recommended policy for `main` once available:
-
-- Require pull request before merging.
-- Require at least 1 approving review.
+- Require a pull request before merging.
+- Require 1 approving review.
 - Require status checks to pass before merging.
-- Require branches to be up to date before merging if feasible.
-- Require conversation resolution if available.
+- Require branches to be up to date before merging.
+- Require conversation resolution.
+- Required checks:
+  - `Build, lint, typecheck, and test`
+  - `Secret scan`
+  - `Dependency audit`
+  - `CodeQL`
 - Block force pushes.
 - Block branch deletion.
-- Do not initially enable admin enforcement until the owner confirms the policy does not block emergency maintenance.
-
-Manual branch protection steps:
-
-1. Go to `Settings -> Branches`.
-2. Select `Add branch protection rule`.
-3. Set branch name pattern to `main`.
-4. Enable `Require a pull request before merging`.
-5. Enable at least 1 required approval if available.
-6. Enable `Require status checks to pass before merging`.
-7. Select:
-   - `Build, lint, typecheck, and test`
-   - `Secret scan`
-   - `Dependency audit`
-8. Enable `Require conversation resolution before merging` if available.
-9. Ensure force pushes are not allowed.
-10. Ensure deletions are not allowed.
-11. Leave administrator enforcement off for the first pass unless the owner wants stricter governance.
-
-Manual ruleset alternative:
-
-1. Go to `Settings -> Rules -> Rulesets`.
-2. Select `New branch ruleset`.
-3. Target branch pattern `main`.
-4. Enable pull request, review, status check, conversation resolution, no force push, and no deletion rules.
-5. Add the same required checks listed above.
-6. Include an owner/admin bypass during private alpha to avoid accidental lockout.
+- Administrator enforcement is disabled for this alpha to avoid accidental owner lockout.
+- Repository rulesets are not used; the branch protection rule is the active protection mechanism.
 
 ## Secret Scanning And Push Protection
 
-Status: disabled.
+Status: enabled through GitHub API.
 
-The API returned:
+The repository security API returned:
 
 ```text
-Secret scanning is disabled on this repository.
+secret_scanning: enabled
+secret_scanning_push_protection: enabled
 ```
 
 Current compensating controls:
@@ -121,14 +95,7 @@ Current compensating controls:
 - Local gitleaks `8.30.1` completed successfully during the July 4, 2026 post-public audit.
 - Release prechecks also run local or fallback secret scans before tagging.
 
-Manual steps:
-
-1. Go to `Settings -> Code security and analysis`.
-2. Find `Secret scanning`.
-3. Select `Enable`.
-4. Find `Push protection`.
-5. Select `Enable`.
-6. Keep the gitleaks workflow enabled as a second layer.
+No open secret scanning alerts were observed after enabling secret scanning.
 
 ## Dependabot
 
@@ -211,9 +178,6 @@ Tracked files present:
 ## Manual Steps Still Required
 
 - Triage or resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts.
-- Enable branch protection or a ruleset for `main`.
-- Enable GitHub Secret scanning.
-- Enable Push protection if available.
 - Run the Security workflow after CodeQL fixes or triage decisions are complete.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.
