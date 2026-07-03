@@ -1,23 +1,23 @@
 # GitHub Hardening Report
 
-Generated for the private pre-public-launch repository hardening pass.
+Generated for the immediate post-public repository hardening audit.
 
 ## Repository
 
 - Repository: `maxi-maxima/devloop-ai`
 - URL: `https://github.com/maxi-maxima/devloop-ai`
-- Visibility: private
+- Visibility: public
 - Default branch: `main`
-- Latest inspected commit before the `v0.1.0-alpha.1` release preparation: `72a9772f44a07195273084edcf4b580cc81772bc`
+- Latest inspected commit before this report update: `40e37c3ae3c6b9e277ea978cbcc29c71a94151fe`
 
 ## Latest Remote CI Status
 
-Latest relevant runs on `main` at inspection time:
+Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28670350025` | success |
-| Security | `28670350026` | success |
+| CI | `28671936990` | success |
+| Security | `28671937032` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -57,15 +57,15 @@ Only workflows that need write access should declare it explicitly. Current rele
 
 ## Branch Protection / Rulesets
 
-Status: not enabled through API.
+Status: not enabled.
 
-Both branch protection and repository ruleset API calls failed on this private repository with:
+The branch protection API returned:
 
 ```text
-Upgrade to GitHub Pro or make this repository public to enable this feature.
+Branch not protected
 ```
 
-No branch protection was applied, so the repository owner is not locked out of `main`.
+The repository rulesets API returned an empty list. No branch protection or ruleset is currently active for `main`.
 
 Recommended policy for `main` once available:
 
@@ -78,7 +78,7 @@ Recommended policy for `main` once available:
 - Block branch deletion.
 - Do not initially enable admin enforcement until the owner confirms the policy does not block emergency maintenance.
 
-Manual branch protection steps immediately after switching the repository public:
+Manual branch protection steps:
 
 1. Go to `Settings -> Branches`.
 2. Select `Add branch protection rule`.
@@ -95,7 +95,7 @@ Manual branch protection steps immediately after switching the repository public
 10. Ensure deletions are not allowed.
 11. Leave administrator enforcement off for the first pass unless the owner wants stricter governance.
 
-Manual ruleset alternative immediately after switching the repository public:
+Manual ruleset alternative:
 
 1. Go to `Settings -> Rules -> Rulesets`.
 2. Select `New branch ruleset`.
@@ -106,12 +106,11 @@ Manual ruleset alternative immediately after switching the repository public:
 
 ## Secret Scanning And Push Protection
 
-Status: not enabled through API.
+Status: disabled.
 
 The API returned:
 
 ```text
-Secret scanning is not available for this repository.
 Secret scanning is disabled on this repository.
 ```
 
@@ -119,10 +118,10 @@ Current compensating controls:
 
 - `.github/workflows/security.yml` runs gitleaks on pushes and pull requests.
 - Latest `Security` workflow completed successfully.
-- Local gitleaks `8.30.1` completed successfully during the July 3, 2026 final launch audit.
+- Local gitleaks `8.30.1` completed successfully during the July 4, 2026 post-public audit.
 - Release prechecks also run local or fallback secret scans before tagging.
 
-Manual steps immediately after switching the repository public:
+Manual steps:
 
 1. Go to `Settings -> Code security and analysis`.
 2. Find `Secret scanning`.
@@ -156,18 +155,19 @@ Manual follow-up:
 
 ## CodeQL / Code Scanning
 
-Status: workflow present, code scanning not enabled for the current private repository.
+Status: workflow present, no code scanning analysis currently available at the time of this audit.
 
 The code scanning API returned:
 
 ```text
-Code scanning is not enabled for this repository. Please enable code scanning in the repository settings.
+no analysis found
 ```
 
 Current workflow behavior:
 
 - `.github/workflows/security.yml` includes a CodeQL job for JavaScript/TypeScript.
-- The CodeQL job runs automatically when the repository is public.
+- The CodeQL job is configured to run automatically when the repository is public.
+- The latest inspected `Security` run was created before the public visibility switch and had `CodeQL` skipped.
 - While the repository is private, the job only runs when repository variable `ENABLE_CODEQL_ON_PRIVATE=true` is set.
 - This avoids surprising GitHub Advanced Security requirements while the repository remains private.
 
@@ -203,10 +203,9 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Keep the repository private until the public launch decision is explicit.
-- Change repository visibility to public only when ready for the controlled visibility switch.
-- Immediately enable branch protection or a ruleset for `main` after making the repository public.
-- Immediately confirm Secret scanning is active and enable Push protection when GitHub makes them available for this repository.
-- Enable CodeQL/default setup or `ENABLE_CODEQL_ON_PRIVATE=true` only when private CodeQL is supported for this account.
+- Enable branch protection or a ruleset for `main`.
+- Enable GitHub Secret scanning.
+- Enable Push protection if available.
+- Run the Security workflow after enabling CodeQL/default setup or after the configured CodeQL job completes successfully.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.

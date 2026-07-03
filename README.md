@@ -1,9 +1,9 @@
 # DevLoop AI
 
-[![npm version](https://img.shields.io/badge/npm-v0.1.0--alpha.0-blue)](https://www.npmjs.com/)
+[![Release](https://img.shields.io/badge/release-v0.1.0--alpha.1-blue)](https://github.com/maxi-maxima/devloop-ai/releases/tag/v0.1.0-alpha.1)
 [![CI](https://img.shields.io/badge/CI-ready-green)](./.github/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
-[![GitHub stars](https://img.shields.io/badge/stars-welcome-lightgrey)](https://github.com/)
+[![GitHub stars](https://img.shields.io/badge/stars-welcome-lightgrey)](https://github.com/maxi-maxima/devloop-ai)
 
 DevLoop AI is the firewall and autofix agent for AI coding agents.
 
