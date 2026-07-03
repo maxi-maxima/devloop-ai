@@ -6,7 +6,8 @@ Use this checklist before switching the repository from private to public and pu
 
 - [ ] Repo is public.
 - [x] CI green.
-- [x] Secret scan passed.
+- [x] Security workflow green.
+- [x] Remote secret scan passed.
 - [ ] Branch protection enabled.
 - [ ] Push protection enabled.
 - [ ] README ready.
@@ -20,11 +21,13 @@ Use this checklist before switching the repository from private to public and pu
 ## Current Audit Notes
 
 - Repository is still private by design.
-- Latest remote `CI` and `Security` workflows on `main` are green.
+- Latest remote `CI` and `Security` workflows on `main` are green as of commit `97a7f650b490f32801519fef74544fc0e8dbfed4`.
 - Remote `Security` includes gitleaks and dependency audit; local gitleaks was unavailable during the latest audit, so install it before changing repository visibility.
+- Newly opened Dependabot pull requests currently have failing `Security` checks and should be triaged or closed before launch to avoid a noisy public first impression.
 - Branch protection and push protection are not enabled because the current private repository/account settings do not expose them through the available GitHub API path.
 - README is not launch-ready until the self-fix PR placeholder is replaced with a real DevLoop-generated PR URL.
-- `./scripts/demo-autofix.sh` passed in the latest local audit.
+- `./scripts/demo-autofix.sh` passed in the latest local audit when run with Git Bash on Windows.
+- `v0.1.0-alpha.0` tag and GitHub prerelease are not present yet.
 - npm publish is intentionally deferred.
 - Launch copy exists, but should not be posted until the release tag and GitHub prerelease exist.
 
