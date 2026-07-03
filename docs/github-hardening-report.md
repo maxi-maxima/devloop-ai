@@ -8,7 +8,7 @@ Generated for the private pre-public-launch repository hardening pass.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: private
 - Default branch: `main`
-- Latest inspected commit before this report update: `72dc8a73f13d38f3d56b592987eb44fbac322808`
+- Latest inspected commit before this report update: `18eea159494c89405e25fa88d4a73cd73d4bb192`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28667353226` | success |
-| Security | `28667353267` | success |
+| CI | `28670350025` | success |
+| Security | `28670350026` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -78,7 +78,7 @@ Recommended policy for `main` once available:
 - Block branch deletion.
 - Do not initially enable admin enforcement until the owner confirms the policy does not block emergency maintenance.
 
-Manual branch protection steps:
+Manual branch protection steps immediately after switching the repository public:
 
 1. Go to `Settings -> Branches`.
 2. Select `Add branch protection rule`.
@@ -95,7 +95,7 @@ Manual branch protection steps:
 10. Ensure deletions are not allowed.
 11. Leave administrator enforcement off for the first pass unless the owner wants stricter governance.
 
-Manual ruleset alternative:
+Manual ruleset alternative immediately after switching the repository public:
 
 1. Go to `Settings -> Rules -> Rulesets`.
 2. Select `New branch ruleset`.
@@ -119,9 +119,10 @@ Current compensating controls:
 
 - `.github/workflows/security.yml` runs gitleaks on pushes and pull requests.
 - Latest `Security` workflow completed successfully.
+- Local gitleaks `8.30.1` completed successfully during the July 3, 2026 final launch audit.
 - Release prechecks also run local or fallback secret scans before tagging.
 
-Manual steps when supported:
+Manual steps immediately after switching the repository public:
 
 1. Go to `Settings -> Code security and analysis`.
 2. Find `Secret scanning`.
@@ -202,8 +203,9 @@ Tracked files present:
 ## Manual Steps Still Required
 
 - Keep the repository private until the public launch decision is explicit.
-- Enable branch protection or a ruleset for `main` after upgrading to GitHub Pro or after making the repository public.
-- Enable Secret scanning and Push protection when GitHub makes them available for this repository.
+- Change repository visibility to public only when ready for the controlled visibility switch.
+- Immediately enable branch protection or a ruleset for `main` after making the repository public.
+- Immediately confirm Secret scanning is active and enable Push protection when GitHub makes them available for this repository.
 - Enable CodeQL/default setup or `ENABLE_CODEQL_ON_PRIVATE=true` only when private CodeQL is supported for this account.
 - Re-run CI and Security after any manual settings change.
-- Do not create a GitHub release or publish to npm until the public launch checklist is complete.
+- Do not publish npm or launch posts until the immediate post-public protection audit is green.

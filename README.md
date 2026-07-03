@@ -40,7 +40,7 @@ Generated PR bodies include an `## Evidence Bundle` section with the run id, ris
 ## 30-second Local Demo
 
 ```bash
-git clone <repo>
+git clone https://github.com/maxi-maxima/devloop-ai.git
 cd devloop-ai
 npm install
 npm run build
