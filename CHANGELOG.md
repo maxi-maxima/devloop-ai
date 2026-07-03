@@ -25,6 +25,7 @@ First public alpha release candidate.
 - CLI commands for diagnosis, autofix, security autofix, benchmarks, firewall checks, agent adapters, and org fleet mode.
 - GitHub App webhook mode for failed workflow routing and slash commands.
 - GitHub Action template for CI autofix.
+- GitHub workflow hardening for Dependabot PR security scans and current official action pins.
 - SARIF parsing and safe security patch generation.
 - MCP-compatible stdio server and transport-agnostic tool contracts.
 - Codex Skill package for reusable CI autofix workflows.
