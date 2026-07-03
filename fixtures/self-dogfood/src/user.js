@@ -1,5 +1,5 @@
 function formatUser(user) {
-  const name = (user.name ?? 'Anonymous').trim();
+  const name = user.name.trim();
   return name || 'Anonymous';
 }
 
