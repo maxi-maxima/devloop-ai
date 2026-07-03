@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `40e37c3ae3c6b9e277ea978cbcc29c71a94151fe`
+- Latest inspected commit before this report update: `4296fe96a92fcf4a44850916e75996b2deea9fb1`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28671936990` | success |
-| Security | `28671937032` | success |
+| CI | `28672868944` | success |
+| Security | `28672868952` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -155,19 +155,26 @@ Manual follow-up:
 
 ## CodeQL / Code Scanning
 
-Status: workflow present, no code scanning analysis currently available at the time of this audit.
+Status: workflow present and CodeQL ran successfully, but open alerts require triage.
 
-The code scanning API returned:
+The code scanning alerts API returned 8 open high-severity alerts:
 
-```text
-no analysis found
-```
+| Alert | Rule | Severity | File | Line |
+|---:|---|---|---|---:|
+| 1 | `js/polynomial-redos` | high | `src/core/guardrails.ts` | 49 |
+| 2 | `js/polynomial-redos` | high | `src/core/patcher.ts` | 21 |
+| 3 | `js/polynomial-redos` | high | `src/core/patcher.ts` | 27 |
+| 4 | `js/polynomial-redos` | high | `src/firewall/patch-risk-detector.ts` | 86 |
+| 5 | `js/polynomial-redos` | high | `src/org/config.ts` | 27 |
+| 6 | `js/polynomial-redos` | high | `src/org/config.ts` | 31 |
+| 7 | `js/polynomial-redos` | high | `src/org/config.ts` | 45 |
+| 8 | `js/polynomial-redos` | high | `src/org/config.ts` | 57 |
 
 Current workflow behavior:
 
 - `.github/workflows/security.yml` includes a CodeQL job for JavaScript/TypeScript.
 - The CodeQL job is configured to run automatically when the repository is public.
-- The latest inspected `Security` run was created before the public visibility switch and had `CodeQL` skipped.
+- The latest inspected `Security` run completed `CodeQL` successfully.
 - While the repository is private, the job only runs when repository variable `ENABLE_CODEQL_ON_PRIVATE=true` is set.
 - This avoids surprising GitHub Advanced Security requirements while the repository remains private.
 
@@ -203,9 +210,10 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
+- Triage or resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts.
 - Enable branch protection or a ruleset for `main`.
 - Enable GitHub Secret scanning.
 - Enable Push protection if available.
-- Run the Security workflow after enabling CodeQL/default setup or after the configured CodeQL job completes successfully.
+- Run the Security workflow after CodeQL fixes or triage decisions are complete.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.

@@ -9,6 +9,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 - [x] Security workflow green.
 - [x] Remote secret scan passed.
 - [x] Local gitleaks scan passed.
+- [ ] CodeQL/code scanning alerts triaged or resolved.
 - [ ] GitHub secret scanning enabled.
 - [ ] Branch protection enabled.
 - [ ] Push protection enabled.
@@ -26,7 +27,8 @@ Use this checklist for the immediate post-public protection gate before publishi
 
 - Repository is public as of the July 4, 2026 post-public audit.
 - Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 post-public audit.
-- Remote `Security` includes gitleaks and dependency audit.
+- Remote `Security` includes gitleaks, dependency audit, and CodeQL.
+- CodeQL completed successfully in the post-public `Security` run, but reported 8 open high-severity `js/polynomial-redos` alerts.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
 - `.gitleaksignore` contains two exact historical fingerprints for false positives in `scripts/self-dogfood/local.sh`, where the script unsets provider tokens before running local self-dogfood tests.
 - No Dependabot pull requests were open during the July 4, 2026 post-public audit.
@@ -41,19 +43,20 @@ Use this checklist for the immediate post-public protection gate before publishi
 - `v0.1.0-alpha.0` annotated tag and GitHub prerelease are present, but the tag points to an earlier launch-readiness commit.
 - `v0.1.0-alpha.1` is the intended public alpha release because it includes the final README, checklist, and hardening documentation corrections.
 - npm publish is intentionally deferred.
-- Launch copy exists, but should not be posted until branch protection, GitHub secret scanning, and push protection are enabled.
+- Launch copy exists, but should not be posted until CodeQL alerts are triaged or resolved and branch protection, GitHub secret scanning, and push protection are enabled.
 
 ## Required Post-Public Remediation
 
-1. Enable main branch protection or a branch ruleset.
-2. Require pull request review if available.
-3. Require the latest successful `CI` and `Security` checks.
-4. Disable force pushes and branch deletion.
-5. Enable GitHub secret scanning.
-6. Enable push protection if available.
-7. Rerun the final launch readiness audit.
-8. Confirm README and release pages render correctly.
-9. Only then publish launch copy.
+1. Triage or resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts.
+2. Enable main branch protection or a branch ruleset.
+3. Require pull request review if available.
+4. Require the latest successful `CI` and `Security` checks.
+5. Disable force pushes and branch deletion.
+6. Enable GitHub secret scanning.
+7. Enable push protection if available.
+8. Rerun the final launch readiness audit.
+9. Confirm README and release pages render correctly.
+10. Only then publish launch copy.
 
 ## Notes
 
