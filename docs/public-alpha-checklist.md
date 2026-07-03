@@ -43,8 +43,9 @@ Use this checklist for the immediate post-public protection gate before publishi
 - README and `docs/self-dogfooding.md` link the real DevLoop-generated self-fix PR: `https://github.com/maxi-maxima/devloop-ai/pull/7`.
 - `./scripts/demo-autofix.sh` passed in the latest local audit when run with Git Bash on Windows.
 - `v0.1.0-alpha.0` annotated tag and GitHub prerelease are present, but the tag points to an earlier launch-readiness commit.
-- `v0.1.0-alpha.1` is the intended public alpha release because it includes the final README, checklist, and hardening documentation corrections.
-- `v0.1.0-alpha.2` is not yet tagged or released; README still points to `v0.1.0-alpha.1`.
+- `v0.1.0-alpha.1` is the current published prerelease and must not be moved now that the repository is public.
+- `v0.1.0-alpha.2` is the next launch candidate for the CodeQL ReDoS fixes plus post-public hardening documentation.
+- `v0.1.0-alpha.2` is not yet tagged or released; README still points to the current published `v0.1.0-alpha.1` prerelease.
 - npm publish is intentionally deferred.
 - Launch copy exists, but should not be posted until PR `#8` is merged, `main` has zero high-severity CodeQL alerts, and `v0.1.0-alpha.2` exists.
 
@@ -53,7 +54,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 1. Merge PR `#8` to resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts on `main`.
 2. Wait for `main` CI and Security to complete successfully.
 3. Confirm zero open high-severity CodeQL alerts.
-4. Prepare and publish `v0.1.0-alpha.2`.
+4. Prepare and publish `v0.1.0-alpha.2`; do not move or recreate `v0.1.0-alpha.1`.
 5. Rerun the final launch readiness audit.
 6. Confirm README and release pages render correctly.
 7. Only then publish launch copy.

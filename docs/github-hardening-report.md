@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `12aca493614e869d4a4d83f01d3500fef7e072fa`
+- Latest inspected commit before this report update: `6d121940beab72335f660f093e3bf03784ca1f50`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28673902481` | success |
-| Security | `28673902472` | success |
+| CI | `28674918115` | success |
+| Security | `28674918081` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -182,5 +182,6 @@ Tracked files present:
 - Run the Security workflow after the CodeQL fix reaches `main`.
 - Confirm zero open high-severity CodeQL alerts.
 - Prepare and publish `v0.1.0-alpha.2` before launch posts.
+- Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.
