@@ -28,11 +28,11 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/OWNER/devloop-ai.git"
+    "url": "https://github.com/maxi-maxima/devloop-ai.git"
   },
-  "homepage": "https://github.com/OWNER/devloop-ai#readme",
+  "homepage": "https://github.com/maxi-maxima/devloop-ai#readme",
   "bugs": {
-    "url": "https://github.com/OWNER/devloop-ai/issues"
+    "url": "https://github.com/maxi-maxima/devloop-ai/issues"
   },
   "files": [
     "dist",
