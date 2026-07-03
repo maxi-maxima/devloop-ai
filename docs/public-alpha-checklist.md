@@ -5,17 +5,28 @@ Use this checklist before switching the repository from private to public and pu
 ## Repository
 
 - [ ] Repo is public.
-- [ ] CI green.
-- [ ] Secret scan passed.
+- [x] CI green.
+- [x] Secret scan passed.
 - [ ] Branch protection enabled.
 - [ ] Push protection enabled.
 - [ ] README ready.
-- [ ] Demo works.
+- [x] Demo works.
 - [ ] Self-fix PR linked.
 - [ ] Release tag exists.
 - [ ] GitHub release published.
-- [ ] npm publish configured or intentionally deferred.
-- [ ] Social launch copy ready.
+- [x] npm publish configured or intentionally deferred.
+- [x] Social launch copy ready.
+
+## Current Audit Notes
+
+- Repository is still private by design.
+- Latest remote `CI` and `Security` workflows on `main` are green.
+- Remote `Security` includes gitleaks and dependency audit; local gitleaks was unavailable during the latest audit, so install it before changing repository visibility.
+- Branch protection and push protection are not enabled because the current private repository/account settings do not expose them through the available GitHub API path.
+- README is not launch-ready until the self-fix PR placeholder is replaced with a real DevLoop-generated PR URL.
+- `./scripts/demo-autofix.sh` passed in the latest local audit.
+- npm publish is intentionally deferred.
+- Launch copy exists, but should not be posted until the release tag and GitHub prerelease exist.
 
 ## Suggested Release Sequence
 
