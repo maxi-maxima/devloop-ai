@@ -1,0 +1,187 @@
+name: Self Dogfood DevLoop
+
+on:
+  workflow_dispatch:
+    inputs:
+      target_branch:
+        description: "Branch that contains the controlled self-dogfood failure"
+        required: true
+        default: "dogfood/failing-ci"
+      test_command:
+        description: "Validation command to run inside fixtures/self-dogfood"
+        required: true
+        default: "npm test"
+      dry_run:
+        description: "Preview the DevLoop fix without opening a PR"
+        required: true
+        default: "false"
+        type: choice
+        options:
+          - "false"
+          - "true"
+
+permissions:
+  contents: write
+  pull-requests: write
+
+jobs:
+  self-dogfood:
+    name: Generate self-fix PR
+    runs-on: ubuntu-latest
+
+    env:
+      FIXTURE_DIR: fixtures/self-dogfood
+      LOG_FILE: ${{ github.workspace }}/self-dogfood-ci.log
+      TEST_COMMAND: ${{ inputs.test_command }}
+      TARGET_BRANCH: ${{ inputs.target_branch }}
+
+    steps:
+      - name: Checkout target branch
+        uses: actions/checkout@v4
+        with:
+          ref: ${{ inputs.target_branch }}
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: npm
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build DevLoop
+        run: npm run build
+
+      - name: Capture expected fixture failure
+        shell: bash
+        run: |
+          set -euo pipefail
+          set +e
+          (
+            cd "$FIXTURE_DIR"
+            bash -lc "$TEST_COMMAND"
+          ) 2>&1 | tee "$LOG_FILE"
+          status=${PIPESTATUS[0]}
+          set -e
+
+          if [ "$status" -eq 0 ]; then
+            echo "Expected the controlled self-dogfood fixture to fail, but it passed."
+            exit 1
+          fi
+
+          echo "Captured failing fixture log at $LOG_FILE"
+
+      - name: Preview DevLoop autofix
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/cli/index.js autofix \
+            --repo "$FIXTURE_DIR" \
+            --log-file "$LOG_FILE" \
+            --test-command "$TEST_COMMAND" \
+            --max-retries 1 \
+            --dry-run \
+            --no-pr \
+            --demo
+
+      - name: Stop after dry run
+        if: ${{ inputs.dry_run == 'true' }}
+        run: echo "Dry run requested. No files were changed and no PR was opened."
+
+      - name: Apply DevLoop autofix
+        if: ${{ inputs.dry_run == 'false' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          node dist/cli/index.js autofix \
+            --repo "$FIXTURE_DIR" \
+            --log-file "$LOG_FILE" \
+            --test-command "$TEST_COMMAND" \
+            --max-retries 1 \
+            --no-pr \
+            --demo
+
+      - name: Validate fixed fixture
+        if: ${{ inputs.dry_run == 'false' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          (
+            cd "$FIXTURE_DIR"
+            bash -lc "$TEST_COMMAND"
+          )
+
+      - name: Verify minimal patch scope
+        if: ${{ inputs.dry_run == 'false' }}
+        shell: bash
+        run: |
+          set -euo pipefail
+          changed_files="$(git diff --name-only)"
+          echo "$changed_files"
+
+          if [ -z "$changed_files" ]; then
+            echo "DevLoop did not leave a patch to review."
+            exit 1
+          fi
+
+          unexpected_files="$(printf '%s\n' "$changed_files" | grep -v -x 'fixtures/self-dogfood/src/user.js' || true)"
+          if [ -n "$unexpected_files" ]; then
+            echo "Unexpected files changed:"
+            echo "$unexpected_files"
+            exit 1
+          fi
+
+      - name: Create self-fix pull request
+        if: ${{ inputs.dry_run == 'false' }}
+        shell: bash
+        env:
+          GH_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          REPOSITORY: ${{ github.repository }}
+          RUN_ID: ${{ github.run_id }}
+          RUN_ATTEMPT: ${{ github.run_attempt }}
+        run: |
+          set -euo pipefail
+
+          fix_branch="devloop/self-dogfood-fix-${RUN_ID}-${RUN_ATTEMPT}"
+
+          mkdir -p .devloop
+          git diff > .devloop/self-dogfood.patch
+
+          cat > .devloop/self-dogfood-pr.md <<BODY
+          ## Diagnosis
+          DevLoop reproduced the controlled self-dogfood CI failure from \`fixtures/self-dogfood\`.
+
+          ## Patch
+          The generated patch restores the safe anonymous-name fallback in \`fixtures/self-dogfood/src/user.js\`.
+
+          ## Validation
+          - \`${TEST_COMMAND}\` in \`fixtures/self-dogfood\`: passed
+
+          ## Sandbox
+          - Runner: GitHub Actions \`ubuntu-latest\`
+          - Mode: deterministic DevLoop self-dogfood autofix
+          - Provider secrets passed to tests: none
+
+          ## Firewall and Evidence
+          - Patch scope check: only \`fixtures/self-dogfood/src/user.js\` changed
+          - Evidence: this workflow run contains the failure log, dry-run preview, applied patch, and passing test output
+
+          ## Human Review
+          This DevLoop-generated fix is intentionally not auto-merged. Please review before merging.
+
+          Workflow run: https://github.com/${REPOSITORY}/actions/runs/${RUN_ID}
+          BODY
+
+          git config user.name "github-actions[bot]"
+          git config user.email "41898282+github-actions[bot]@users.noreply.github.com"
+          git checkout -b "$fix_branch"
+          git add fixtures/self-dogfood/src/user.js
+          git commit -m "fix: repair self-dogfood fixture"
+          git push --set-upstream origin "$fix_branch"
+
+          gh pr create \
+            --base "$TARGET_BRANCH" \
+            --head "$fix_branch" \
+            --title "DevLoop self-fix: repair self-dogfood fixture" \
+            --body-file .devloop/self-dogfood-pr.md

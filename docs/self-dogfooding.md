@@ -63,22 +63,110 @@ The PR output should include:
 
 ## Path B: DevLoop GitHub Action
 
-1. Add or enable the DevLoop autofix action from `templates/github-actions/devloop-autofix.yml`.
-2. Configure it to watch the `Self Dogfood Fixture` workflow.
-3. Configure the autofix command with `--repo fixtures/self-dogfood --test-command "npm test"`.
-4. Store the provider API key as a GitHub secret, or use a self-hosted provider.
-5. Run `./scripts/self-dogfood/start.sh`.
-6. Open the dogfood PR and let the failing workflow trigger the autofix action.
+The repository includes a minimal manual workflow for private alpha validation:
 
-The action should open a DevLoop-generated PR or push a fix according to your configured mode. It should still include diagnosis, validation command, sandbox metadata, firewall report, and evidence bundle details.
+```text
+.github/workflows/self-dogfood-devloop.yml
+```
+
+This workflow is intentionally `workflow_dispatch` only. It checks out the controlled failing branch, captures the fixture test failure, runs DevLoop in dry-run mode, applies the safe fixture patch when requested, reruns tests, verifies the patch only touches `fixtures/self-dogfood/src/user.js`, and opens a reviewable pull request back into the dogfood branch.
+
+### Required GitHub Secrets
+
+The default self-dogfood workflow uses DevLoop's deterministic `--demo` path and requires no model provider secrets.
+
+Required configuration:
+
+- `GITHUB_TOKEN`: provided automatically by GitHub Actions.
+
+Optional provider secrets for adapting this workflow to non-demo LLM mode:
+
+- `OPENAI_API_KEY`
+- `ANTHROPIC_API_KEY`
+
+Do not print provider keys in logs, commit them to the repository, or pass them to the fixture test process. If you adapt the workflow away from `--demo`, pass provider secrets only to the DevLoop step that needs them.
+
+### Run the Workflow
+
+First make sure the controlled failing branch exists:
+
+```bash
+./scripts/self-dogfood/start.sh
+```
+
+Then trigger the workflow from the GitHub UI:
+
+1. Open **Actions**.
+2. Select **Self Dogfood DevLoop**.
+3. Choose **Run workflow** on `main`.
+4. Set `target_branch` to `dogfood/failing-ci`.
+5. Set `test_command` to `npm test`.
+6. Set `dry_run` to `false` to allow PR creation.
+
+Or trigger it with GitHub CLI:
+
+```bash
+gh workflow run self-dogfood-devloop.yml \
+  --ref main \
+  -f target_branch=dogfood/failing-ci \
+  -f test_command="npm test" \
+  -f dry_run=false
+```
+
+For a preview-only run that cannot open a PR:
+
+```bash
+gh workflow run self-dogfood-devloop.yml \
+  --ref main \
+  -f target_branch=dogfood/failing-ci \
+  -f test_command="npm test" \
+  -f dry_run=true
+```
+
+### Identify the Generated PR
+
+The workflow creates a branch named like:
+
+```text
+devloop/self-dogfood-fix-<run-id>-<attempt>
+```
+
+The pull request title is:
+
+```text
+DevLoop self-fix: repair self-dogfood fixture
+```
+
+Find it with:
+
+```bash
+gh pr list --state open --search "DevLoop self-fix: repair self-dogfood fixture in:title"
+```
+
+The PR body includes diagnosis, patch summary, test result, runner/sandbox details, patch scope validation, and the workflow run URL.
 
 ## Safety Notes
 
 - The controlled bug is limited to `fixtures/self-dogfood/src/user.js`.
 - No secrets or private data are required.
 - The local demo clears common AI and GitHub token environment variables before running the deterministic demo provider.
-- The dogfood workflow has read-only repository permissions.
+- The fixture test workflow has read-only repository permissions.
+- The self-dogfood PR workflow has only the permissions needed to push a fix branch and open a PR.
 - The workflow proves the loop through a reviewable PR; it does not auto-merge.
+
+## Cleanup
+
+Close or merge the generated self-fix PR after review. Delete temporary fix branches with:
+
+```bash
+git push origin --delete devloop/self-dogfood-fix-<run-id>-<attempt>
+```
+
+Clean up the dogfood branch when the validation is done:
+
+```bash
+./scripts/self-dogfood/reset.sh --delete-remote
+```
 
 After the first real self-fix PR exists, update the README placeholder:
 
