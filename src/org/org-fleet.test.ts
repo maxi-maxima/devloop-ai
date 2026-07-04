@@ -52,6 +52,29 @@ repositories:
     expect(config.repositories.exclude).toEqual(['legacy-*']);
   });
 
+  test('parses org config with adversarial spacing and comments without regex backtracking', () => {
+    const padding = ' '.repeat(6000);
+    const config = parseOrgConfig(`
+${'#'.repeat(6000)}
+organization:${padding}acme
+defaults:
+  mode:${padding}dry-run
+  maxRetries:${padding}3
+  allowNetwork:${padding}false
+  firewallMode:${padding}strict
+repositories:
+  include:
+    -${padding}"api-*"
+  exclude:
+    -${padding}"legacy-*"
+`);
+
+    expect(config.organization).toBe('acme');
+    expect(config.defaults.maxRetries).toBe(3);
+    expect(config.repositories.include).toEqual(['api-*']);
+    expect(config.repositories.exclude).toEqual(['legacy-*']);
+  });
+
   test('scans repositories for language, CI, test command, scanners, and DevLoop configs', async () => {
     const report = await scanOrganization({
       client: mockClient(),

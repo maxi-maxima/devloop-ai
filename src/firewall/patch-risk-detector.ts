@@ -83,9 +83,9 @@ function parsePatch(patch: string): ParsedPatch {
   let pendingDeleted = false;
 
   for (const rawLine of patch.split(/\r?\n/)) {
-    const diffMatch = rawLine.match(/^diff --git a\/(.+?) b\/(.+)$/);
-    if (diffMatch) {
-      currentFile = normalizePatchPath(diffMatch[2]!);
+    const diffPath = parseGitDiffLine(rawLine);
+    if (diffPath) {
+      currentFile = normalizePatchPath(diffPath);
       files.add(currentFile);
       pendingDeleted = false;
       continue;
@@ -96,9 +96,9 @@ function parsePatch(patch: string): ParsedPatch {
       continue;
     }
 
-    const newFileMatch = rawLine.match(/^\+\+\+ b\/(.+)$/);
-    if (newFileMatch) {
-      currentFile = normalizePatchPath(newFileMatch[1]!);
+    const newFilePath = parseNewFileHeader(rawLine);
+    if (newFilePath) {
+      currentFile = normalizePatchPath(newFilePath);
       files.add(currentFile);
       if (pendingDeleted) {
         deletedFiles.push(currentFile);
@@ -127,6 +127,37 @@ function parsePatch(patch: string): ParsedPatch {
 
 function normalizePatchPath(file: string): string {
   return file.replace(/\\/g, '/');
+}
+
+function parseGitDiffLine(line: string): string | undefined {
+  const prefix = 'diff --git a/';
+  if (!line.startsWith(prefix)) {
+    return undefined;
+  }
+
+  const rest = line.slice(prefix.length);
+  const separator = rest.indexOf(' b/');
+  if (separator === -1) {
+    return undefined;
+  }
+
+  const newPath = rest.slice(separator + 3);
+  return newPath || undefined;
+}
+
+function parseNewFileHeader(line: string): string | undefined {
+  const prefix = '+++ ';
+  if (!line.startsWith(prefix)) {
+    return undefined;
+  }
+
+  const value = line.slice(prefix.length).trimStart();
+  if (!value.startsWith('b/')) {
+    return undefined;
+  }
+
+  const pathValue = value.slice(2);
+  return pathValue || undefined;
 }
 
 function finding(

@@ -21,6 +21,13 @@ describe('patcher', () => {
     expect(() => parseUnifiedDiff('not a diff')).toThrow(/unified diff/i);
   });
 
+  test('parses padded file headers without regex backtracking', () => {
+    const padding = ' '.repeat(8000);
+    const files = parseUnifiedDiff(`--- ${padding}a/src/foo.ts\n+++ ${padding}b/src/foo.ts\n@@ -1 +1 @@\n-old\n+new\n`);
+
+    expect(files).toEqual([{ oldPath: 'src/foo.ts', newPath: 'src/foo.ts' }]);
+  });
+
   test('shows a dry-run preview without modifying files', async () => {
     const repoPath = await makeRepo();
     const patch = `--- a/index.js\n+++ b/index.js\n@@ -1 +1 @@\n-module.exports = () => 1;\n+module.exports = () => 2;\n`;

@@ -10,28 +10,28 @@ export function parseUnifiedDiff(patch: string): PatchFile[] {
     throw new Error('LLM reported that the failure cannot be fixed safely.');
   }
 
-  if (!/^---\s+/m.test(patch) || !/^\+\+\+\s+/m.test(patch) || !/^@@\s+/m.test(patch)) {
+  const lines = patch.split(/\r?\n/);
+  if (!hasUnifiedDiffMarkers(lines)) {
     throw new Error('Patch must be a valid unified diff.');
   }
 
   const files: PatchFile[] = [];
-  const lines = patch.split(/\r?\n/);
 
   for (let index = 0; index < lines.length; index += 1) {
-    const oldMatch = lines[index]!.match(/^---\s+(?:a\/)?(.+)$/);
-    if (!oldMatch) {
+    const oldPath = parseFileHeader(lines[index]!, '---', 'a/');
+    if (!oldPath) {
       continue;
     }
 
     const next = lines[index + 1];
-    const newMatch = next?.match(/^\+\+\+\s+(?:b\/)?(.+)$/);
-    if (!newMatch) {
+    const newPath = next ? parseFileHeader(next, '+++', 'b/') : undefined;
+    if (!newPath) {
       throw new Error('Malformed unified diff: missing +++ file header.');
     }
 
     files.push({
-      oldPath: stripPatchMeta(oldMatch[1]!),
-      newPath: stripPatchMeta(newMatch[1]!)
+      oldPath,
+      newPath
     });
   }
 
@@ -130,7 +130,9 @@ async function runGit(cwd: string, args: string[]): Promise<void> {
 }
 
 function stripPatchMeta(file: string): string {
-  return file.split(/\s+/)[0]!.replace(/\\/g, '/');
+  const metaStart = firstWhitespaceIndex(file);
+  const clean = metaStart === -1 ? file : file.slice(0, metaStart);
+  return clean.replace(/\\/g, '/');
 }
 
 function validateHunkLines(lines: string[]): void {
@@ -151,8 +153,60 @@ function validateHunkLines(lines: string[]): void {
       continue;
     }
 
-    if (inHunk && line !== '' && !/^[ +\-\\]/.test(line)) {
+    if (inHunk && line !== '' && !isValidHunkLinePrefix(line[0]!)) {
       throw new Error('Malformed unified diff: hunk lines must start with space, +, or -.');
     }
   }
+}
+
+function hasUnifiedDiffMarkers(lines: string[]): boolean {
+  let hasOldHeader = false;
+  let hasNewHeader = false;
+  let hasHunk = false;
+
+  for (const line of lines) {
+    if (readMarkerValue(line, '---') !== undefined) {
+      hasOldHeader = true;
+    } else if (readMarkerValue(line, '+++') !== undefined) {
+      hasNewHeader = true;
+    } else if (line.startsWith('@@')) {
+      hasHunk = true;
+    }
+  }
+
+  return hasOldHeader && hasNewHeader && hasHunk;
+}
+
+function parseFileHeader(line: string, marker: '---' | '+++', optionalPrefix: 'a/' | 'b/'): string | undefined {
+  const value = readMarkerValue(line, marker);
+  if (value === undefined) {
+    return undefined;
+  }
+  const withoutPrefix = value.startsWith(optionalPrefix) ? value.slice(optionalPrefix.length) : value;
+  return stripPatchMeta(withoutPrefix);
+}
+
+function readMarkerValue(line: string, marker: '---' | '+++'): string | undefined {
+  if (!line.startsWith(marker)) {
+    return undefined;
+  }
+  const next = line[marker.length];
+  if (next !== ' ' && next !== '\t') {
+    return undefined;
+  }
+  return line.slice(marker.length + 1).trimStart();
+}
+
+function firstWhitespaceIndex(value: string): number {
+  for (let index = 0; index < value.length; index += 1) {
+    const char = value[index];
+    if (char === ' ' || char === '\t' || char === '\r' || char === '\n') {
+      return index;
+    }
+  }
+  return -1;
+}
+
+function isValidHunkLinePrefix(char: string): boolean {
+  return char === ' ' || char === '+' || char === '-' || char === '\\';
 }

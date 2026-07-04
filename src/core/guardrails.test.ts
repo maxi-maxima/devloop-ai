@@ -26,4 +26,21 @@ describe('validatePatchSafety', () => {
     expect(safety.passed).toBe(false);
     expect(safety.errors.join('\n')).toContain('too many files');
   });
+
+  test('rejects binary patch markers without backtracking on long lines', () => {
+    const repeated = 'binary files '.repeat(2000);
+    const patch = [
+      '--- a/src/image.bin',
+      '+++ b/src/image.bin',
+      '@@ -1 +1 @@',
+      '-old',
+      '+new',
+      `Binary files ${repeated} differ`
+    ].join('\n');
+
+    const safety = validatePatchSafety(patch);
+
+    expect(safety.passed).toBe(false);
+    expect(safety.errors).toContain('Binary file changes are not allowed.');
+  });
 });
