@@ -2,6 +2,25 @@
 
 All notable changes to DevLoop AI will be documented in this file.
 
+## v0.1.0-alpha.2
+
+Launch candidate after post-public CodeQL and repository hardening cleanup.
+
+### Highlights
+
+- Resolves CodeQL `js/polynomial-redos` launch blockers.
+- Records that `main` branch protection was restored to require 1 approving review after the controlled PR `#8` merge.
+- Confirms required CI/Security checks remain enabled, including CodeQL, secret scan, dependency audit, and the main build/test check.
+- Updates release documentation for the CodeQL-fixed launch candidate.
+- Keeps npm publishing intentionally deferred.
+
+### Known limitations
+
+- Alpha quality.
+- Human review required.
+- No auto-merge.
+- npm package publication deferred.
+
 ## v0.1.0-alpha.1
 
 Launch-readiness correction release.

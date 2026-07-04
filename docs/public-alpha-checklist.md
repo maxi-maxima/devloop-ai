@@ -26,7 +26,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 ## Current Audit Notes
 
 - Repository is public as of the July 4, 2026 post-public audit.
-- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 post-PR-8 verification.
+- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 post-PR-8 verification at commit `c468d5b69f84a9c0572a9c4dfb3e71ed72b669f4`.
 - Remote `Security` includes gitleaks, dependency audit, and CodeQL.
 - CodeQL completed successfully after PR `#8` was squash-merged into `main`; the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
@@ -46,7 +46,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 - `v0.1.0-alpha.0` annotated tag and GitHub prerelease are present, but the tag points to an earlier launch-readiness commit.
 - `v0.1.0-alpha.1` is the current published prerelease and must not be moved now that the repository is public.
 - `v0.1.0-alpha.2` is the next launch candidate for the CodeQL ReDoS fixes plus post-public hardening documentation.
-- `v0.1.0-alpha.2` is not yet tagged or released; README still points to the current published `v0.1.0-alpha.1` prerelease.
+- `v0.1.0-alpha.2` release notes are prepared for the CodeQL-fixed launch candidate.
 - npm publish is intentionally deferred.
 - Launch copy exists, but should not be posted until `v0.1.0-alpha.2` exists and the final launch-post audit is green.
 

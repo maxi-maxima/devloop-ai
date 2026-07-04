@@ -1,6 +1,6 @@
 # DevLoop AI
 
-[![Release](https://img.shields.io/badge/release-v0.1.0--alpha.1-blue)](https://github.com/maxi-maxima/devloop-ai/releases/tag/v0.1.0-alpha.1)
+[![Release](https://img.shields.io/badge/release-v0.1.0--alpha.2-blue)](https://github.com/maxi-maxima/devloop-ai/releases/tag/v0.1.0-alpha.2)
 [![CI](https://img.shields.io/badge/CI-ready-green)](./.github/workflows/ci.yml)
 [![License: MIT](https://img.shields.io/badge/license-MIT-green.svg)](./LICENSE)
 [![GitHub stars](https://img.shields.io/badge/stars-welcome-lightgrey)](https://github.com/maxi-maxima/devloop-ai)
@@ -15,7 +15,7 @@ DevLoop is built for developers, maintainers, and AI tooling users who want auto
 ## Quick Links
 
 - [30-second demo](#30-second-local-demo)
-- [Release notes](./docs/releases/v0.1.0-alpha.1.md)
+- [Release notes](./docs/releases/v0.1.0-alpha.2.md)
 - [Self dogfood](#devloop-fixed-itself)
 - [GitHub App](#github-app-installation)
 - [CLI](#cli-usage)
@@ -346,7 +346,7 @@ See [docs/security-model.md](./docs/security-model.md).
 
 ## Documentation
 
-- [v0.1.0-alpha.1 release notes](./docs/releases/v0.1.0-alpha.1.md)
+- [v0.1.0-alpha.2 release notes](./docs/releases/v0.1.0-alpha.2.md)
 - [Public alpha checklist](./docs/public-alpha-checklist.md)
 - [Launch copy](./docs/launch-copy.md)
 - [Launch guide](./docs/launch.md)

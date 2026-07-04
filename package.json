@@ -1,6 +1,6 @@
 {
   "name": "devloop-ai",
-  "version": "0.1.0-alpha.1",
+  "version": "0.1.0-alpha.2",
   "description": "Firewall and autofix agent for AI coding agents, failed CI, and security alerts.",
   "type": "module",
   "main": "dist/cli/index.js",
