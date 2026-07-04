@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `96753a9da6fa0c17070eb66a5d62d22cfe3445a8`
+- Latest inspected commit before this report update: `9658ba6069f3413fb42a2187309b38f33dbf08f2`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28703892792` | success |
-| Security | `28703892807` | success |
+| CI | `28704101639` | success |
+| Security | `28704101628` | success |
 | Release | `28703989542` | success |
 
 Discovered check/job names from the inspected commit:

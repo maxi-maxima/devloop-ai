@@ -27,7 +27,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 ## Current Audit Notes
 
 - Repository is public as of the July 4, 2026 post-public audit.
-- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 alpha.2 launch-post audit at commit `96753a9da6fa0c17070eb66a5d62d22cfe3445a8`.
+- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 alpha.2 launch-post audit at commit `9658ba6069f3413fb42a2187309b38f33dbf08f2`.
 - Remote `Security` includes gitleaks, dependency audit, and CodeQL.
 - CodeQL completed successfully after PR `#8` was squash-merged into `main`; the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
@@ -55,12 +55,12 @@ Use this checklist for the immediate post-public protection gate before publishi
 - npm publish is intentionally deferred.
 - Launch copy exists, but should not be posted until the final launch-post audit is green.
 
-## Required Post-Public Remediation
+## Remaining Launch Steps
 
 1. Keep npm publish deferred unless explicitly decided later.
-2. Rerun the final launch readiness audit.
-3. Confirm README and release pages render correctly.
-4. Only then publish launch copy.
+2. Confirm README and release pages render correctly in the browser.
+3. Publish launch copy from `docs/launch-copy.md`.
+4. Monitor issues, pull requests, Actions, Security, and Discussions for 24 hours.
 
 ## Notes
 
