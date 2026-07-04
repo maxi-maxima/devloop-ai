@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `6d121940beab72335f660f093e3bf03784ca1f50`
+- Latest inspected commit before this report update: `ced388f195ecad0b834ddf7a93d08c46a7b679fe`
 
 ## Latest Remote CI Status
 
@@ -60,7 +60,7 @@ Only workflows that need write access should declare it explicitly. Current rele
 
 Status: enabled through GitHub API.
 
-Configured policy for `main`:
+Configured policy target for `main`:
 
 - Require a pull request before merging.
 - Require 1 approving review.
@@ -76,6 +76,14 @@ Configured policy for `main`:
 - Block branch deletion.
 - Administrator enforcement is disabled for this alpha to avoid accidental owner lockout.
 - Repository rulesets are not used; the branch protection rule is the active protection mechanism.
+
+Temporary launch-blocker exception:
+
+- Required approving reviews were temporarily relaxed from 1 to 0 on July 4, 2026 to merge PR `#8`, the launch-blocking CodeQL `js/polynomial-redos` fix.
+- Required CI/Security checks remained enabled: `Build, lint, typecheck, and test`, `Secret scan`, `Dependency audit`, and `CodeQL`.
+- Branch up-to-date checks, conversation resolution, force-push blocking, and deletion blocking remained enabled.
+- CodeQL and Security workflows were not disabled.
+- Restore the 1 approving review requirement immediately after the controlled PR `#8` merge.
 
 ## Secret Scanning And Push Protection
 
@@ -122,7 +130,7 @@ Manual follow-up:
 
 ## CodeQL / Code Scanning
 
-Status: workflow present and CodeQL ran successfully, but open alerts still block launch posts.
+Status: workflow present and CodeQL ran successfully. PR `#8` has been squash-merged into `main`, but launch posts remain blocked until `main` Security reruns and the code scanning API reports zero open `js/polynomial-redos` alerts.
 
 The code scanning alerts API returned 8 open high-severity alerts:
 
@@ -144,7 +152,7 @@ Current workflow behavior:
 - The latest inspected `Security` run completed `CodeQL` successfully.
 - While the repository is private, the job only runs when repository variable `ENABLE_CODEQL_ON_PRIVATE=true` is set.
 - This avoids surprising GitHub Advanced Security requirements while the repository remains private.
-- PR `#8` (`fix: eliminate CodeQL ReDoS risks`) has passing checks and zero `js/polynomial-redos` alerts on its branch, but it has not been merged into `main`.
+- PR `#8` (`fix: eliminate CodeQL ReDoS risks`) was squash-merged as `ced388f195ecad0b834ddf7a93d08c46a7b679fe` after local validation and all PR CI/Security checks passed.
 
 Manual steps when supported:
 
@@ -178,8 +186,8 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Merge PR `#8` to resolve the 8 open high-severity CodeQL `js/polynomial-redos` alerts on `main`.
-- Run the Security workflow after the CodeQL fix reaches `main`.
+- Restore `main` branch protection to require 1 approving review.
+- Run or wait for the Security workflow after the CodeQL fix reaches `main`.
 - Confirm zero open high-severity CodeQL alerts.
 - Prepare and publish `v0.1.0-alpha.2` before launch posts.
 - Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
