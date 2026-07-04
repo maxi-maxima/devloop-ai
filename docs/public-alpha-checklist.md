@@ -26,16 +26,16 @@ Use this checklist for the immediate post-public protection gate before publishi
 ## Current Audit Notes
 
 - Repository is public as of the July 4, 2026 post-public audit.
-- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 launch-post readiness audit.
+- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 post-PR-8 verification.
 - Remote `Security` includes gitleaks, dependency audit, and CodeQL.
 - CodeQL completed successfully after PR `#8` was squash-merged into `main`; the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
 - `.gitleaksignore` contains two exact historical fingerprints for false positives in `scripts/self-dogfood/local.sh`, where the script unsets provider tokens before running local self-dogfood tests.
 - No Dependabot pull requests were open during the July 4, 2026 post-public audit.
-- Open pull requests observed during the July 4, 2026 launch-post readiness audit were the real self-fix PR `#7` and CodeQL ReDoS fix PR `#8`.
+- Open pull requests observed during the July 4, 2026 launch-post readiness audit were the real self-fix PR `#7` and CodeQL ReDoS fix PR `#8`; PR `#8` is now merged.
 - PR `#8` was squash-merged on July 4, 2026 as `ced388f195ecad0b834ddf7a93d08c46a7b679fe` after all local validation and PR CI/Security checks passed.
-- Required approving reviews were temporarily relaxed from 1 to 0 to merge the launch-blocking CodeQL ReDoS fix. Required CI/Security checks remained enabled; CodeQL and Security workflows were not disabled.
-- Branch protection remains enabled for `main` with up-to-date required checks, required conversation resolution, blocked force pushes, and blocked deletion. Restore the 1 approving review requirement immediately after this controlled merge.
+- Required approving reviews were temporarily relaxed from 1 to 0 to merge the launch-blocking CodeQL ReDoS fix, then restored to 1 after PR `#8` merged. Required CI/Security checks remained enabled; CodeQL and Security workflows were not disabled.
+- Branch protection remains enabled for `main` with 1 required approving review, up-to-date required checks, required conversation resolution, blocked force pushes, and blocked deletion.
 - Required checks are `Build, lint, typecheck, and test`, `Secret scan`, `Dependency audit`, and `CodeQL`.
 - Repository rulesets are not used; the branch protection rule is the active protection mechanism.
 - GitHub secret scanning is enabled according to `gh api repos/maxi-maxima/devloop-ai --jq '.security_and_analysis'`.
@@ -48,15 +48,14 @@ Use this checklist for the immediate post-public protection gate before publishi
 - `v0.1.0-alpha.2` is the next launch candidate for the CodeQL ReDoS fixes plus post-public hardening documentation.
 - `v0.1.0-alpha.2` is not yet tagged or released; README still points to the current published `v0.1.0-alpha.1` prerelease.
 - npm publish is intentionally deferred.
-- Launch copy exists, but should not be posted until the 1-review branch protection requirement is restored and `v0.1.0-alpha.2` exists.
+- Launch copy exists, but should not be posted until `v0.1.0-alpha.2` exists and the final launch-post audit is green.
 
 ## Required Post-Public Remediation
 
-1. Restore `main` branch protection to require 1 approving review.
-2. Prepare and publish `v0.1.0-alpha.2`; do not move or recreate `v0.1.0-alpha.1`.
-3. Rerun the final launch readiness audit.
-4. Confirm README and release pages render correctly.
-5. Only then publish launch copy.
+1. Prepare and publish `v0.1.0-alpha.2`; do not move or recreate `v0.1.0-alpha.1`.
+2. Rerun the final launch readiness audit.
+3. Confirm README and release pages render correctly.
+4. Only then publish launch copy.
 
 ## Notes
 

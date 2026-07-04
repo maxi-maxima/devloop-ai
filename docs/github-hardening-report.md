@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `62f95a9e7fb1be791954571394c4507019cdda45`
+- Latest inspected commit before this report update: `a223c73d8216832ad00f5194fc10387883606e13`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28702358086` | success |
-| Security | `28702358077` | success |
+| CI | `28702418499` | success |
+| Security | `28702418515` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -83,7 +83,7 @@ Temporary launch-blocker exception:
 - Required CI/Security checks remained enabled: `Build, lint, typecheck, and test`, `Secret scan`, `Dependency audit`, and `CodeQL`.
 - Branch up-to-date checks, conversation resolution, force-push blocking, and deletion blocking remained enabled.
 - CodeQL and Security workflows were not disabled.
-- Restore the 1 approving review requirement immediately after the controlled PR `#8` merge.
+- The 1 approving review requirement was restored after the controlled PR `#8` merge.
 
 ## Secret Scanning And Push Protection
 
@@ -186,7 +186,6 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Restore `main` branch protection to require 1 approving review.
 - Prepare and publish `v0.1.0-alpha.2` before launch posts.
 - Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
 - Re-run CI and Security after any manual settings change.
