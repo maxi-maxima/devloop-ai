@@ -20,14 +20,14 @@ Use this checklist for the immediate post-public protection gate before publishi
 - [x] Self-fix PR linked.
 - [x] `v0.1.0-alpha.2` release tag exists.
 - [x] `v0.1.0-alpha.2` GitHub prerelease published.
-- [ ] Tag-triggered `Release` workflow is clean.
+- [x] `Release` workflow cleanup completed.
 - [x] npm publish configured or intentionally deferred.
 - [x] Social launch copy ready.
 
 ## Current Audit Notes
 
 - Repository is public as of the July 4, 2026 post-public audit.
-- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 alpha.2 launch-post audit at commit `b96a4dec8bc11155dc823d199ceb58efda6783f3`.
+- Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 alpha.2 launch-post audit at commit `96753a9da6fa0c17070eb66a5d62d22cfe3445a8`.
 - Remote `Security` includes gitleaks, dependency audit, and CodeQL.
 - CodeQL completed successfully after PR `#8` was squash-merged into `main`; the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
@@ -49,18 +49,18 @@ Use this checklist for the immediate post-public protection gate before publishi
 - `v0.1.0-alpha.2` is the current published prerelease for the CodeQL ReDoS fixes plus post-public hardening documentation.
 - `v0.1.0-alpha.2` resolves to `b96a4dec8bc11155dc823d199ceb58efda6783f3`.
 - The tag-triggered `Release` workflow run `28702878201` failed because it attempted to create a GitHub Release that had already been created manually for `v0.1.0-alpha.2`. Its build, lint, typecheck, test, and pack steps passed; npm publish was skipped.
-- The release workflow has been updated to be idempotent: if a GitHub Release already exists for the tag, it updates the title and notes instead of failing on duplicate creation.
+- The release workflow was updated to be idempotent: if a GitHub Release already exists for the tag, it updates the title and notes instead of failing on duplicate creation.
+- Successful idempotent Release verification run `28703989542` replaced the old red run for launch-readiness purposes.
+- Failed run `28702878201` was deleted after the root cause was fixed and verified. No tags or releases were moved or deleted.
 - npm publish is intentionally deferred.
-- Launch copy exists, but should not be posted until the red tag-triggered `Release` workflow noise is resolved and the final launch-post audit is green.
+- Launch copy exists, but should not be posted until the final launch-post audit is green.
 
 ## Required Post-Public Remediation
 
-1. Merge the idempotent release workflow fix.
-2. Run the `Release` workflow manually with `tag=v0.1.0-alpha.2` to supersede the red tag-triggered run without moving or deleting `v0.1.0-alpha.1` or `v0.1.0-alpha.2`.
-3. Keep npm publish deferred unless explicitly decided later.
-4. Rerun the final launch readiness audit.
-5. Confirm README and release pages render correctly.
-6. Only then publish launch copy.
+1. Keep npm publish deferred unless explicitly decided later.
+2. Rerun the final launch readiness audit.
+3. Confirm README and release pages render correctly.
+4. Only then publish launch copy.
 
 ## Notes
 

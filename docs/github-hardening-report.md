@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `50eaf43c59c3cc03573af4896c93013427a511d3`
+- Latest inspected commit before this report update: `96753a9da6fa0c17070eb66a5d62d22cfe3445a8`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,9 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28703379893` | success |
-| Security | `28703379895` | success |
+| CI | `28703892792` | success |
+| Security | `28703892807` | success |
+| Release | `28703989542` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -156,7 +157,7 @@ Current workflow behavior:
 
 ## Release Workflow Status
 
-Status: requires cleanup before launch posts.
+Status: cleaned up after idempotent verification.
 
 - `v0.1.0-alpha.2` exists and points to `b96a4dec8bc11155dc823d199ceb58efda6783f3`.
 - The GitHub prerelease for `v0.1.0-alpha.2` exists.
@@ -164,7 +165,9 @@ Status: requires cleanup before launch posts.
 - The failed run completed build, lint, typecheck, test, and package dry-run steps successfully.
 - The npm publish step was skipped; npm publishing remains intentionally deferred.
 - The release workflow has been updated to be idempotent: it validates the tag and release notes file, verifies the tag exists remotely, and edits an existing release instead of failing on duplicate creation.
-- The workflow also supports `workflow_dispatch` with an explicit `tag` input so `v0.1.0-alpha.2` can be revalidated after this fix lands.
+- The workflow also supports `workflow_dispatch` with an explicit `tag` input so `v0.1.0-alpha.2` can be revalidated without moving tags.
+- Manual Release verification run `28703989542` succeeded for `tag=v0.1.0-alpha.2` and updated the existing GitHub prerelease idempotently.
+- Failed run `28702878201` was deleted after the idempotent fix was merged and verified, so the public Actions tab no longer shows that resolved duplicate-release failure.
 - Do not move or recreate `v0.1.0-alpha.1` or `v0.1.0-alpha.2` to address this workflow noise.
 
 Manual steps when supported:
@@ -200,7 +203,6 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Merge the idempotent release workflow fix and run `Release` manually with `tag=v0.1.0-alpha.2` before launch posts.
 - Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.
