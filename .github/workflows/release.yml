@@ -4,19 +4,62 @@ on:
   push:
     tags:
       - "v*"
+  workflow_dispatch:
+    inputs:
+      tag:
+        description: "Release tag to verify or update"
+        required: true
+        type: string
+
+concurrency:
+  group: release-${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref_name }}
+  cancel-in-progress: false
 
 permissions:
-  contents: write
-  id-token: write
+  contents: read
 
 jobs:
   release:
     name: Build, test, and create release
     runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      id-token: write
 
     steps:
       - name: Checkout
         uses: actions/checkout@v7.0.0
+        with:
+          ref: ${{ github.event_name == 'workflow_dispatch' && inputs.tag || github.ref }}
+
+      - name: Resolve release tag
+        env:
+          EVENT_NAME: ${{ github.event_name }}
+          INPUT_TAG: ${{ inputs.tag }}
+        run: |
+          set -euo pipefail
+
+          if [[ "$EVENT_NAME" == "workflow_dispatch" ]]; then
+            RELEASE_TAG="$INPUT_TAG"
+          else
+            RELEASE_TAG="$GITHUB_REF_NAME"
+          fi
+
+          if [[ "$RELEASE_TAG" != v* || "$RELEASE_TAG" == *"/"* || "$RELEASE_TAG" == *".."* ]]; then
+            echo "Invalid release tag: $RELEASE_TAG" >&2
+            exit 1
+          fi
+
+          RELEASE_NOTES="docs/releases/${RELEASE_TAG}.md"
+          if [[ ! -f "$RELEASE_NOTES" ]]; then
+            echo "Missing release notes file: $RELEASE_NOTES" >&2
+            exit 1
+          fi
+
+          git ls-remote --exit-code --tags origin "refs/tags/$RELEASE_TAG" >/dev/null
+
+          echo "RELEASE_TAG=$RELEASE_TAG" >> "$GITHUB_ENV"
+          echo "RELEASE_NOTES=$RELEASE_NOTES" >> "$GITHUB_ENV"
 
       - name: Setup Node.js
         uses: actions/setup-node@v6.4.0
@@ -43,10 +86,25 @@ jobs:
       - name: Pack npm tarball
         run: npm pack
 
-      - name: Create GitHub release
+      - name: Create or update GitHub release
         env:
           GH_TOKEN: ${{ github.token }}
-        run: gh release create "$GITHUB_REF_NAME" ./*.tgz --generate-notes
+        run: |
+          set -euo pipefail
+
+          if gh release view "$RELEASE_TAG" >/dev/null 2>&1; then
+            echo "Release already exists; updating metadata/notes idempotently"
+            gh release edit "$RELEASE_TAG" \
+              --title "DevLoop AI $RELEASE_TAG" \
+              --notes-file "$RELEASE_NOTES" \
+              --prerelease
+          else
+            echo "Release does not exist; creating"
+            gh release create "$RELEASE_TAG" ./*.tgz \
+              --title "DevLoop AI $RELEASE_TAG" \
+              --notes-file "$RELEASE_NOTES" \
+              --prerelease
+          fi
 
       # To publish to npm without a long-lived NPM_TOKEN, enable npm trusted
       # publishing for this repository and set repository variable NPM_PUBLISH=true.
