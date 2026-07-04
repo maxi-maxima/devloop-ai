@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `ced388f195ecad0b834ddf7a93d08c46a7b679fe`
+- Latest inspected commit before this report update: `62f95a9e7fb1be791954571394c4507019cdda45`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28674918115` | success |
-| Security | `28674918081` | success |
+| CI | `28702358086` | success |
+| Security | `28702358077` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -130,9 +130,9 @@ Manual follow-up:
 
 ## CodeQL / Code Scanning
 
-Status: workflow present and CodeQL ran successfully. PR `#8` has been squash-merged into `main`, but launch posts remain blocked until `main` Security reruns and the code scanning API reports zero open `js/polynomial-redos` alerts.
+Status: workflow present and CodeQL ran successfully. PR `#8` has been squash-merged into `main`, and the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 
-The code scanning alerts API returned 8 open high-severity alerts:
+Before PR `#8`, the code scanning alerts API returned 8 open high-severity alerts:
 
 | Alert | Rule | Severity | File | Line |
 |---:|---|---|---|---:|
@@ -187,8 +187,6 @@ Tracked files present:
 ## Manual Steps Still Required
 
 - Restore `main` branch protection to require 1 approving review.
-- Run or wait for the Security workflow after the CodeQL fix reaches `main`.
-- Confirm zero open high-severity CodeQL alerts.
 - Prepare and publish `v0.1.0-alpha.2` before launch posts.
 - Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
 - Re-run CI and Security after any manual settings change.

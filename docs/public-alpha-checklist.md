@@ -9,7 +9,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 - [x] Security workflow green.
 - [x] Remote secret scan passed.
 - [x] Local gitleaks scan passed.
-- [ ] CodeQL/code scanning alerts triaged or resolved.
+- [x] CodeQL/code scanning alerts triaged or resolved.
 - [x] GitHub secret scanning enabled.
 - [x] Branch protection enabled.
 - [x] Push protection enabled.
@@ -28,7 +28,7 @@ Use this checklist for the immediate post-public protection gate before publishi
 - Repository is public as of the July 4, 2026 post-public audit.
 - Latest observed remote `CI` and `Security` workflows on `main` were green during the July 4, 2026 launch-post readiness audit.
 - Remote `Security` includes gitleaks, dependency audit, and CodeQL.
-- CodeQL completed successfully in the post-public `Security` run. PR `#8` has now been squash-merged into `main` to fix the 8 high-severity `js/polynomial-redos` alerts, but the alerts must not be marked resolved until `main` Security reruns and the code scanning API reports zero open matching alerts.
+- CodeQL completed successfully after PR `#8` was squash-merged into `main`; the code scanning API reported zero open CodeQL alerts after the July 4, 2026 post-merge Security run.
 - Local gitleaks `8.30.1` passed on July 4, 2026 with `gitleaks detect --source . --redact --verbose`.
 - `.gitleaksignore` contains two exact historical fingerprints for false positives in `scripts/self-dogfood/local.sh`, where the script unsets provider tokens before running local self-dogfood tests.
 - No Dependabot pull requests were open during the July 4, 2026 post-public audit.
@@ -48,17 +48,15 @@ Use this checklist for the immediate post-public protection gate before publishi
 - `v0.1.0-alpha.2` is the next launch candidate for the CodeQL ReDoS fixes plus post-public hardening documentation.
 - `v0.1.0-alpha.2` is not yet tagged or released; README still points to the current published `v0.1.0-alpha.1` prerelease.
 - npm publish is intentionally deferred.
-- Launch copy exists, but should not be posted until the 1-review branch protection requirement is restored, `main` CI/Security pass, `main` has zero high-severity CodeQL alerts, and `v0.1.0-alpha.2` exists.
+- Launch copy exists, but should not be posted until the 1-review branch protection requirement is restored and `v0.1.0-alpha.2` exists.
 
 ## Required Post-Public Remediation
 
 1. Restore `main` branch protection to require 1 approving review.
-2. Wait for `main` CI and Security to complete successfully after PR `#8`.
-3. Confirm zero open high-severity CodeQL alerts.
-4. Prepare and publish `v0.1.0-alpha.2`; do not move or recreate `v0.1.0-alpha.1`.
-5. Rerun the final launch readiness audit.
-6. Confirm README and release pages render correctly.
-7. Only then publish launch copy.
+2. Prepare and publish `v0.1.0-alpha.2`; do not move or recreate `v0.1.0-alpha.1`.
+3. Rerun the final launch readiness audit.
+4. Confirm README and release pages render correctly.
+5. Only then publish launch copy.
 
 ## Notes
 
