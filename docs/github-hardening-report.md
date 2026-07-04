@@ -8,7 +8,7 @@ Generated for the immediate post-public repository hardening audit.
 - URL: `https://github.com/maxi-maxima/devloop-ai`
 - Visibility: public
 - Default branch: `main`
-- Latest inspected commit before this report update: `c468d5b69f84a9c0572a9c4dfb3e71ed72b669f4`
+- Latest inspected commit before this report update: `b96a4dec8bc11155dc823d199ceb58efda6783f3`
 
 ## Latest Remote CI Status
 
@@ -16,8 +16,8 @@ Latest relevant runs on `main` at the July 4, 2026 post-public inspection time:
 
 | Workflow | Run ID | Status |
 |---|---:|---|
-| CI | `28702635581` | success |
-| Security | `28702635585` | success |
+| CI | `28702827926` | success |
+| Security | `28702827917` | success |
 
 Discovered check/job names from the inspected commit:
 
@@ -154,6 +154,17 @@ Current workflow behavior:
 - This avoids surprising GitHub Advanced Security requirements while the repository remains private.
 - PR `#8` (`fix: eliminate CodeQL ReDoS risks`) was squash-merged as `ced388f195ecad0b834ddf7a93d08c46a7b679fe` after local validation and all PR CI/Security checks passed.
 
+## Release Workflow Status
+
+Status: requires cleanup before launch posts.
+
+- `v0.1.0-alpha.2` exists and points to `b96a4dec8bc11155dc823d199ceb58efda6783f3`.
+- The GitHub prerelease for `v0.1.0-alpha.2` exists.
+- The tag-triggered `Release` workflow run `28702878201` failed at `Create GitHub release` because the release for `v0.1.0-alpha.2` already existed.
+- The failed run completed build, lint, typecheck, test, and package dry-run steps successfully.
+- The npm publish step was skipped; npm publishing remains intentionally deferred.
+- Do not move or recreate `v0.1.0-alpha.1` or `v0.1.0-alpha.2` to address this workflow noise.
+
 Manual steps when supported:
 
 1. Go to `Settings -> Code security and analysis`.
@@ -187,7 +198,7 @@ Tracked files present:
 
 ## Manual Steps Still Required
 
-- Prepare and publish `v0.1.0-alpha.2` before launch posts.
+- Resolve the red tag-triggered `Release` workflow run before launch posts.
 - Do not move or recreate the public `v0.1.0-alpha.1` tag or release.
 - Re-run CI and Security after any manual settings change.
 - Do not publish npm or launch posts until the immediate post-public protection audit is green.
