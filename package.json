@@ -84,7 +84,7 @@
   "dependencies": {
     "commander": "^15.0.0",
     "dotenv": "^17.4.2",
-    "simple-git": "^3.36.0"
+    "simple-git": "^4.0.2"
   },
   "devDependencies": {
     "@types/node": "^26.3.0",
